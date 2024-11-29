@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce Website</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+</head>
+<body>
+    <div id="page" class="site page-home">
+
+        <aside class="site-off desktop-hide">
+            <div class="off-canvas">
+                <div class="canvas-head flexitem">
+                    <div class="logo"><a href="/"><span class="circle"></span>.D11Store</a></div>
+                    <a href="#" class="t-close flexcenter"><i class="ri-close-line"></i></a>
+                </div>
+                <div class="departments"></div>
+                <nav></nav>
+                <div class="thetop-nav"></div>
+            </div>
+        </aside>
+
+        <header>
+            <div class="header-top mobile-hide">
+                <div class="container">
+                    <div class="wrapper flexitem">   
+                    </div>
+                </div>
+            </div>
+            <div class="header-nav">
+                <div class="container">
+                    <div class="wrapper flexitem">
+                        <a href="#" class="trigger desktop-hide"><span class="i ri-menu-2-line"></span></a>
+                        <div class="left flexitem">
+                            <div class="logo"><a href="/"><span class="circle"></span>.D11Store</a></div>
+                            <nav class="mobile-hide">
+                                <ul class="flexitem second-links">
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="/about">About</a></li>
+
+                                   
+                                    <li class="has-child">
+                                        <a href="#">Categories
+                                            <div class="icon-small"><i class="ri-arrow-down-s-line"></i></div>
+                                        </a>
+                                        <div class="mega">
+                                            <div class="container">
+                                                <div class="wrapper">
+                                                    <div class="flexcol">
+                                                        <div class="row">
+                                                            <h4>Departments</h4>
+                                                            <ul>
+                                                                <% results1.forEach(result => { %>
+                                                                    <li><a href="/page-category/<%= result.id %>"><%= result.name_depart%></a></li>
+                                                                <% }); %>
+                                                                
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flexcol">
+                                                        <div class="row">
+                                                            <h4>Sub-Departments</h4>
+                                                            <ul>
+                                                                <% results10.forEach(result => { %>
+                                                                    <li><a href="/page-sub_category/<%= result.id %>"><%= result.name_sub_depart%></a></li>
+                                                                <% }); %>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flexcol">
+                                                        <div class="row">
+                                                            <h4>Top Brands</h4>
+                                                            <ul class="row">
+                                                                <% results2.forEach(result => { %>
+                                                                    <li><a href="/page-company/<%= result.id %>"><%= result.company_name%></a></li>
+                                                                <% }); %>
+                                                                
+                                                            </ul>
+                                                            <a href="#" class="view-all">View all companies<i class="ri-arrow-right-line"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flexcol products">
+                                                        <div class="row">
+                                                            <div class="media">
+                                                                <div class="thumbnail object-cover">
+                                                                    <a href="#">
+                                                                        <img src="assets/menu/menu_homeinterior.jpg" alt="">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-content">
+                                                                <h4>B2B Solutions!</h4>
+                                                                <a href="#" class="primary-button">Check Now</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="right">
+                            <ul class="flexitem second-links">
+                                <li class="mobile-hide"><a href="#" id="showModalIcon">
+                                    <div class="icon-large">
+                                        <% if (isAuthenticated) { %>
+                                            <a href="/dashboard"><i class="ri-user-line"></i></a>
+                                            <div class="fly-item"><span class="item-number">I</span></div>
+                                        <% } else{ %>
+                                            <i class="ri-user-line"></i>
+                                        <%}%>
+                                    </div>
+                                </a></li>
+
+                                <% if (isAuthenticated) { %>
+                                <li class="iscart">
+                                    <a href="#">
+                                        <div class="icon-large">
+                                            <i class="ri-shopping-cart-line"></i>
+                                            <div class="fly-item"><span class="item-number"><%= cartItems.length %></span></div>
+                                        </div>
+                                        
+                                        <div class="icon-text">
+                                            <div class="mini-text">Total</div>
+                                            <div class="cart-total"><%= cartItems.reduce((acc, item) => acc + ((item.price * item.min_order)*item.quantity), 0).toFixed(2) %> €</div>
+                                        </div>
+                                    </a>
+
+                                    <div class="mini-cart">
+                                        <div class="content">
+                                            <div class="cart-head">
+                                                <%= cartItems.length %> items in cart
+                                            </div>
+                                            <div class="cart-body">
+                                                <ul class="products mini">
+                                                    <% cartItems.forEach(item => { %>
+                                                    <li class="item">
+                                                        <div class="thumbnail object-cover">
+                                                            <a href="#"><img src="/assets/empresas_img/<%= item.main_img %>" alt=""></a>
+                                                        </div>
+                                                        <div class="item-content">
+                                                            <p><a href="#"><%= item.product_name %></a></p>
+                                                            <span class="price">
+                                                                <span><%= item.price.toFixed(2) %> €</span>
+                                                                <span class="fly-item"><span><%= (item.quantity * item.min_order) %> x</span>
+                                                            </span>
+                                                        </div>
+                                                        <a href="" class="item-remove" data-product-id="<%= item.product_id %>"><i class="ri-close-line"></i></a>
+                                                    </li>
+                                                    <% }) %>
+                                                </ul>
+                                            </div>
+                                            <div class="cart-footer">
+                                                <div class="subtotal">
+                                                    <p>Subtotal</p>
+                                                    <p><strong><%= cartItems.reduce((acc, item) => acc + ((item.price * item.min_order)*item.quantity), 0).toFixed(2) %> €</strong></p>
+                                                </div>
+                                                <% if (cartItems.length > 0) { %>
+                                                    <div class="actions">
+                                                        <a href="/cart" class="primary-button">View Cart</a>
+                                                    </div>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <div class="icon-large" style="margin-left: 15px; cursor: pointer;" id="logout-icon">
+                                    <i class="ri-logout-box-r-line"></i>
+                                </div>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Fim do header-top -->
+         
+        <main>
+            <!-- About us -->
+            <section id="about-us" class="about-us">
+                <div class="container">
+                    <div class="full-width-title">
+                        <div class="section-title">
+                            <h2 class="about-us-titles">About Us</h2>
+                        </div>
+                    </div>
+                    <div class="about-content">
+                        <div class="how-it-started">
+                            <h3>How it started</h3>
+                            <p>We started with just a college project, but we decided to take it further by creating a website that facilitates communication, visualization, and the creation of both new and existing businesses.</p>
+                        </div>
+                            <section id="our-leadership" class="our-leadership">
+                                <div class="container">
+                                    <div class="section-title-our-leadership">
+                                        <h2><span class="larger-text">Our</span><br><span class="smaller-text">Leadership</span></h2>
+                                    </div>
+                                    <div class="leadership-grid">
+                                        <div class="leadership-card">
+                                            <img src="assets/photos/Tiago_Sousa.jpg" alt="Tiago Sousa">
+                                            <div class="info">
+                                                <h4>Tiago Sousa</h4>
+                                                <p>Co-founder & CEO</p>
+                                                <a href="https://www.linkedin.com/in/eoinhinchy" target="_blank"><i class="ri-linkedin-fill"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="leadership-card">
+                                            <img src="assets/photos/Rodrigo_Anjos.jpg" alt="Rodrigo Anjos">
+                                            <div class="info">
+                                                <h4>Rodrigo Anjos</h4>
+                                                <p>Co-founder & COO</p>
+                                                <a href="https://www.linkedin.com/in/rodrigo-anjos-5532a5196/" target="_blank"><i class="ri-linkedin-fill"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="leadership-card">
+                                            <img src="assets/photos/Tiago_Lança.jpg" alt="Tiago Lança">
+                                            <div class="info">
+                                                <h4>Tiago Lança</h4>
+                                                <p>Chief Revenue Officer</p>
+                                                <a href="https://www.linkedin.com/in/colmlong" target="_blank"><i class="ri-linkedin-fill"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="leadership-card">
+                                            <img src="assets/photos/Daniel_Martins.jpg" alt="Daniel Martins">
+                                            <div class="info">
+                                                <h4>Daniel Martins</h4>
+                                                <p>Chief Revenue Officer</p>
+                                                <a href="https://www.linkedin.com/in/colmlong" target="_blank"><i class="ri-linkedin-fill"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        <h3 id="clients-and-partners"class="clients-and-partners">Clients and Partners</h3>
+                        <!-- brands -->
+                        <div class="brands">
+                            <div class="container">
+                                <div class="wrapper flexitem">
+                                    <div class="item">
+                                        <a href="#">
+                                            <img src="assets/brands/Agro.png" alt="">
+                                        </a>
+                                    </div>
+
+                                    <div class="item">
+                                        <a href="#">
+                                            <img src="assets/brands/Beauty.png" alt="">
+                                        </a>
+                                    </div>
+
+                                    <div class="item">
+                                        <a href="#">
+                                            <img src="assets/brands/Fit.png" alt="">
+                                        </a>
+                                    </div>
+
+                                    <div class="item">
+                                        <a href="#">
+                                            <img src="assets/brands/Maykro.png" alt="">
+                                        </a>
+                                    </div>
+
+                                    <div class="item">
+                                        <a href="#">
+                                            <img src="assets/brands/Paw.png" alt="">
+                                        </a>
+                                    </div>
+
+                                    <div class="item">
+                                        <a href="#">
+                                            <img src="assets/brands/Style.png" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- FIM das brands -->
+                    </div>
+                </div>
+            </section>
+            <!-- Join Us -->
+            <section id="join-us" class="join-us">
+                <div class="container">
+                    <div class="section-title-join-us">
+                        <h2><span class="join-us-1">Join a</span></h2>
+                        <h2><span class="join-us-2">world-class<br>team</span></h2>
+                        <h3><span class="join-us-3">Creating new enterprises and making<br>it more acessible</span></h3>
+                        <button class="join-us-button">Join Us</button>
+                    </div>
+                </div>
+            </section>
+            <section id="team-grid" class="team-grid">
+                <div class="container">
+                    <div class="grid-item">
+                        <img src="assets/photos/office_1.jpg" alt="Team Image 1">
+                    </div>
+                    <div class="grid-item">
+                        <img src="assets/photos/office_3.jpg" alt="Team Image 2">
+                    </div>
+                    <div class="grid-item">
+                        <img src="assets/photos/office_2.jpg" alt="Team Image 3">
+                    </div>
+                </div>
+            </section>
+            <!-- Privacy & Security -->
+            <section id="privacy-security" class="privacy-security">
+                <div class="container">
+                    <div class="section-title-privacy-security">
+                        <h2>Privacy & Security</h2>
+                    </div>
+                    <div class="grid-privacy-security">
+                        <div class="card protection"> <!-- Classe .connection aplicada aqui -->
+                            <span class="icon-card">
+                                <i class="ri-shield-user-line"></i>
+                            </span>
+                            <h4>Protection</h4>
+                            <p>All sessions are individually protected to ensure the security and privacy of each user. We use advanced security protocols to protect your information throughout the entire browsing experience. With each login, a new security token is generated, ensuring that every session is unique and secure.</p>
+                        </div>
+                        <div class="card encryption"> <!-- Classe .visual aplicada aqui -->
+                            <span class="icon-card">
+                                <i class="ri-git-repository-private-line"></i>
+                            </span>
+                            <h4>Encryption</h4>
+                            <p>Passwords are encrypted using sophisticated hash algorithms, making them nearly impossible to decipher. We use cutting-edge encryption technologies to ensure your passwords are always secure. </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Our Values -->
+            <section id="our-values" class="our-values">
+                <div class="container">
+                    <div class="section-title-our-values">
+                        <h2>Our Values</h2>
+                    </div>
+                    <div class="grid-our-values">
+                        <div class="card connection"> <!-- Classe .connection aplicada aqui -->
+                            <span class="icon-card">
+                                <i class="ri-shake-hands-line"></i>
+                            </span>
+                            <h4>Connection</h4>
+                            <p>Our focus is to make interactions between companies easy. We believe that efficient collaboration and communication are fundamental for success in the business environment. Therefore, we dedicate our efforts to creating solutions that simplify and enhance connections between our business partners, ensuring quick and effective information exchange.</p>
+                        </div>
+                        <div class="card visual"> <!-- Classe .visual aplicada aqui -->
+                            <span class="icon-card">
+                                <i class="ri-bar-chart-grouped-line"></i>
+                            </span>
+                            <h4>Visual</h4>
+                            <p>We focus on enabling clients to visualize transactions through intuitive and detailed graphs. We understand that good data visualization is essential for informed decision-making. Our graphs provide a clear and comprehensible view of business activities, helping our clients monitor and analyze their operations effectively.</p>
+                        </div>
+                        <div class="card management"> <!-- Classe .management aplicada aqui -->
+                            <span class="icon-card">
+                                <i class="ri-archive-drawer-line"></i>
+                            </span>
+                            <h4>Management</h4>
+                            <p>We facilitate product organization so they are easy to find. Our platform is designed to offer simplified and efficient inventory management, allowing our clients to quickly locate the products they need. We believe that good organization is crucial to optimizing processes and increasing productivity in daily operations.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Shipping Methods -->
+            <section id="shipping" class="shipping">
+                <div class="container">
+                    <div class="section-title-shipping">
+                        <h2>Shipping Methods</h2>
+                    </div>
+                    <div class="grid-shipping">
+                        <div class="card standard">
+                            <span class="icon-card">
+                                <i class="ri-suitcase-line"></i>
+                            </span>
+                            <h4>Standard</h4>
+                            <p style="margin-bottom: 20px;"><b>INTERNATIONAL</b><br>Delevery Price - 50€<br>Estimated Delivery Time - 10 days</p>
+                            <p><b>NATIONAL</b><br>Delevery Price - 20€<br>Estimated Delivery Time - 5 days</p>
+                        </div>
+                        <div class="card express">
+                            <span class="icon-card">
+                                <i class="ri-vip-crown-line"></i>
+                            </span>
+                            <h4>Express</h4>
+                            <p style="margin-bottom: 20px;"><b>INTERNATIONAL</b><br>Delevery Price - 75€<br>Estimated Delivery Time - 7 days</p>
+                            <p><b>NATIONAL</b><br>Delevery Price - 35€<br>Estimated Delivery Time - 3 days</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Faq -->
+            <section class="faq" id="faq">
+                <h1>Frequently Asked Questions</h1>
+                <div class="faq-item">
+                    <input type="checkbox" id="q1">
+                    <label for="q1" class="faq-question">What is D11 Store?</label>
+                    <div class="faq-answer">
+                        <p>It is a platform that focuses on the sale of products between companies.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="q2">
+                    <label for="q2" class="faq-question">How does D11 Store work?</label>
+                    <div class="faq-answer">
+                        <p>D11 Store facilitates the sale of products between companies and the creation of the newest ones.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="q3">
+                    <label for="q3" class="faq-question">How do I make my authentication in D11 Store?</label>
+                    <div class="faq-answer">
+                        <p>To authenticate, just go to the top of the page and click on 'My Account' in the upper right corner.</p>
+                        <img src="assets/faq/my_account.jpg" alt="my_account">
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="q4">
+                    <label for="q4" class="faq-question">Can I see how my sales went?</label>
+                    <div class="faq-answer">
+                        <p>Yes, you can. After creating your account, you can access your dashboard and the rest of your profile.</p>
+                        <img src="assets/faq/dashboard.jpg" alt="dashboard">
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="q5">
+                    <label for="q5" class="faq-question">How can I get a refund?</label>
+                    <div class="faq-answer">
+                        <p>For a refund please contact us directly trough email, or our phone number.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <input type="checkbox" id="q6">
+                    <label for="q6" class="faq-question">What types of paymenth is accepted?</label>
+                    <div class="faq-answer">
+                        <p>We accept any type of card, including Visa/Master Card/American Express/Apple Pay/Paypal/Google Pay etc...</p>
+                    </div>
+                </div>
+            </section>
+            <section id="cantact-us" class="contact-us">
+                <div class="container">
+                    <div class="section-title-contact-us">
+                        <h1>Contact us:</h2>
+                        <h2><i class="ri-mail-fill"></i>: d11.b2b.store@gmail.com</h2>
+                        <h2><i class="ri-phone-fill"></i>: 211555333</h2>
+                    </div>
+                </div>
+            </section>    
+        </main>
+        <!-- Fim do main -->
+
+        <!-- Footer -->
+        <footer>
+            <!-- widgets -->
+            <div class="widgets">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="flexwrap">
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>Help & Support</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="#faq">Help</a></li>
+                                        <li><a href="#faq">FAQ</a></li>
+                                        <li><a href="#shipping">Shipping Methods</a></li>
+                                        <li><a href="#contact-us">Contact us</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>User Account</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="#">Login/Signin</a></li>
+                                        <li><a href="#faq" onclick="openFAQQuestion('q4')">Account Management</a></li>
+                                        <li><a href="#privacy-security">Privacy and Security</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>Payment Info</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="#faq" onclick="openFAQQuestion('q6')">Payment Method</a></li>
+                                        <li><a href="#faq" onclick="openFAQQuestion('q6')">Credit Cards</a></li>                                  
+                                        <li><a href="#faq" onclick="openFAQQuestion('q5')">Refund</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>D11 Store</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="#about-us">About Us</a></li>
+                                        <li><a href="#our-leadership">Our Leaders</a></li>
+                                        <li><a href="#clients-and-partners">Clients and Partners</a></li>
+                                        <li><a href="#join-us">Join Us</a></li>
+                                        <li><a href="#our-values">Our Values</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim dos widgets -->
+
+            
+            <!-- footer info -->
+            <div class="footer-info">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="flexcol">
+                            <div class="logo">
+                                <a href="#"><span class="circle"></span>.D11Store</a>
+                            </div>
+                            <div class="socials">
+                                <ul class="flexitem">
+                                    <li><a href="#"><i class="ri-twitter-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-facebook-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-instagram-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-linkedin-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-youtube-line"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="mini-text">&copy; Copyright 2024 .D11Store. All right reserved.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim do footer info -->
+        </footer>
+        <!-- Fim do footer -->
+
+        <!-- menu bottom fixed -->
+        <div class="menu-bottom desktop-hide">
+            <div class="container">
+                <div class="wrapper">
+                    <nav>
+                        <ul class="flexitem">
+                            <li>
+                                <a href="/">
+                                    <i class="ri-bar-chart-line"></i>
+                                    <span>Trending</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <% if (isAuthenticated) { %>
+                                    
+                                    <a href="/dashboard">
+                                        <i class="ri-user-6-line"></i>
+                                        <span>Account</span>
+                                        <div class="fly-item" style="bottom: 5px;">
+                                            <span class="item-number">I</span>
+                                        </div>
+                                    </a>
+                                <% } else{ %>
+                                    <a href="#" id="showModalIconMobile">
+                                        <i class="ri-user-6-line"></i>
+                                        <span>Account</span>
+                                    </a>
+                                <%}%>
+                            </li>
+
+                            <li>
+                                <a href="#0" class="t-search">
+                                    <i class="ri-search-line"></i>
+                                    <span>Search</span>
+                                </a>
+                            </li>
+
+                            <% if (isAuthenticated) { %>
+                                <li>
+                                    <a href="/cart">
+                                        <i class="ri-shopping-cart-line"></i>
+                                        <span>Cart</span>
+                                        <div class="fly-item">
+                                            <span class="item-number"><%= cartItems.length %></span>
+                                        </div>
+                                    </a>
+                                </li>
+                            <%}%>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do mwnu bottom fixed -->
+        <!-- search bottom -->
+        <div class="search-bottom desktop-hide">
+            <div class="container">
+                <div class="wrapper">
+
+                    <form action="" class="search">
+                        <a href="#" class="t-close search-close flexcenter"><i class="ri-close-line"></i></a>
+                        <span class="icon-large"><i class="ri-search-line"></i></span>
+                        <input type="search" placeholder="Your email address" required>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do search bottom -->
+        <div id="modal" class="modal">
+            
+            <div class="box-login">
+                <h1 id="loginTitle">Log In</h1>
+                <form id="loginForm" action="/login" method="POST">
+                    <div class="input-group-login">
+                        <div class="input-field-login">
+                            <i class="ri-user-fill"></i>
+                            <input class="input-login" type="email" id="loginEmail" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-lock-fill"></i>
+                            <input class="input-login" type="password" id="loginPassword" name="password" placeholder="Password" required>
+                        </div>
+                        <p>Don't have an account? <a href="#" class="show-create-account">Click Here!</a></p>
+                    </div>
+                    <div class="btn-field-login">
+                        <button type="submit" id="loginbtn">Log In</button>
+                    </div>
+                </form>
+                <a href="#" class="t-close modalclose flexcenter">
+                    <i class="ri-close-line"></i>
+                </a>
+            </div>
+
+            <div class="box-createAccount" style="display: none;">
+                <h1 id="createAccountTitle">Create Account</h1>
+                <form id="createAccountForm" action="/create-account" method="POST" enctype="multipart/form-data">
+                    <div class="input-group2">
+                        <div class="input-field-login">
+                            <i class="ri-shield-user-fill"></i>
+                            <input class="input-login" type="text" id="company_name" name="company_name" placeholder="Company Name" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-user-search-fill"></i>
+                            <input class="input-login" type="text" id="nif" name="nif" placeholder="NIF" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-mail-fill"></i>
+                            <input class="input-login" type="email" id="createEmail" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-lock-fill"></i>
+                            <input class="input-login" type="password" id="createPassword" name="password" placeholder="Password" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-phone-fill"></i>
+                            <input class="input-login" type="tel" id="contact" name="contact" placeholder="Contact" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-home-4-fill"></i>
+                            <input class="input-login" type="text" id="adress" name="address" placeholder="Adress" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-image-fill"></i>
+                            <input class="input-login" type="file" name="main_img" name="main_img" id="main_img" placeholder="Image" required>
+                        </div>
+                        <div class="input-field-login full-width">
+                            <i class="ri-file-text-fill"></i>
+                            <textarea id="company_description" name="company_description" placeholder="Description" required></textarea>
+                        </div>
+                    </div>
+                    <p style="margin-top: 50px;">Already have an account? <a href="#" class="show-login">Click Here!</a></p>
+                    <div class="btn-field-login">
+                        <button type="submit" id="createbtn">Create Account</button>
+                    </div>
+                </form>
+                <a href="#" class="t-close modalclose flexcenter">
+                    <i class="ri-close-line"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="overlay"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="script-2.js"></script>
+    <script>
+        // Remover artigos do icon de carrinho
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.item-remove').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    event.preventDefault();
+
+                    const productId = button.getAttribute('data-product-id');
+
+                    try {
+                        const response = await fetch('/remove-from-cart', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ productId })
+                        });
+
+                        const result = await response.json();
+                        if (result.success) {
+                            // Remover o item do DOM
+                            window.location.reload();
+                            
+                            // Mostrar mensagem de confirmação
+                            alert('Product removed from cart.');
+                        } else {
+                            alert('Erro ao remover o produto do carrinho.');
+                        }
+                    } catch (error) {
+                        console.error('Erro:', error);
+                        alert('Erro ao remover o produto do carrinho.');
+                    }
+                });
+            });
+        });
+        // Model de login e create account
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginBox = document.querySelector('.box-login');
+            const createAccountBox = document.querySelector('.box-createAccount');
+            const showCreateAccount = document.querySelector('.show-create-account');
+            const showLogin = document.querySelector('.show-login');
+            const modal = document.getElementById('modal');
+            const closeIcons = document.querySelectorAll('.modalclose');
+            const showModalIcon = document.getElementById('showModalIcon');
+            const showModalIconMobile = document.getElementById('showModalIconMobile');
+
+            console.log(loginBox, createAccountBox, showCreateAccount, showLogin);
+
+            // Inicialmente, exibe apenas o loginBox e oculta o createAccountBox
+            createAccountBox.style.display = 'none';
+
+            // Função para resetar os formulários ao estado inicial
+            function resetForms() {
+                loginBox.style.display = 'block';
+                createAccountBox.style.display = 'none';
+            };
+
+            // Mostrar o modal ao clicar no ícone
+            showModalIcon.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                fetch('/check-session')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.isAuthenticated) {
+                        alert('Você já tem sessão iniciada.');
+                    } else {
+                        resetForms();
+                        modal.style.display = 'block';
+                    }
+                })
+            });
+
+            showModalIconMobile.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                fetch('/check-session')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.isAuthenticated) {
+                        alert('Você já tem sessão iniciada.');
+                    } else {
+                        resetForms();
+                        modal.style.display = 'block';
+                    }
+                })
+            });
+
+            // Mostrar formulário de criação de conta ao clicar no link
+            showCreateAccount.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginBox.style.display = 'none';
+                createAccountBox.style.display = 'block';
+            });
+
+            // Mostrar formulário de login ao clicar no link
+            showLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginBox.style.display = 'block';
+                createAccountBox.style.display = 'none';
+            });
+
+            // Fechar o modal ao clicar no ícone de fechar
+            closeIcons.forEach(function(icon) {
+                icon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    modal.style.display = 'none';
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const createAccountForm = document.getElementById('createAccountForm');
+
+            createAccountForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevenir o comportamento padrão do formulário
+
+                const formData = new FormData(createAccountForm);
+
+                fetch('/create-account', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message); // Mostrar a mensagem de sucesso
+                        window.location.reload(); // Recarregar a página
+                    } else {
+                        alert(data.message); // Mostrar a mensagem de erro, se houver
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao criar a conta. Por favor, tente novamente.');
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevenir o comportamento padrão do formulário
+
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                
+                console.log(`Email: ${email}, Password: ${password}`);
+
+                fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email, password: password })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload(); // Recarregar a página após o login bem-sucedido
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao tentar fazer login. Por favor, tente novamente.');
+                });
+            });
+        });
+
+        document.getElementById('logout-icon').addEventListener('click', () => {
+            if (confirm('Are you sure you want to log out?')) {
+                fetch('/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Logout successful!');
+                        window.location.href = '/';
+                    } else {
+                        alert('Error logging out. Please try again later.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao fazer logout:', error);
+                    alert('Error logging out. Please try again later.');
+                });
+            }
+        });
+
+    </script>
+</body>
+</html>

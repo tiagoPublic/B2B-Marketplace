@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce Website</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+</head>
+<body>
+
+    <div id="page" class="site page-cart">
+
+        <aside class="site-off desktop-hide">
+            <div class="off-canvas">
+                <div class="canvas-head flexitem">
+                    <div class="logo"><a href="/"><span class="circle"></span>.D11Store</a></div>
+                    <a href="#" class="t-close flexcenter"><i class="ri-close-line"></i></a>
+                </div>
+                <div class="departments"></div>
+                <nav></nav>
+                <div class="thetop-nav"></div>
+            </div>
+        </aside>
+
+        <header>
+            <!--Responsive div, não mexer-->
+            <div class="header-top mobile-hide">
+                <div class="container">
+                    <div class="wrapper flexitem">   
+                    </div>
+                </div>
+            </div>
+
+            <!-- header-top -->
+            <div class="header-nav">
+                <div class="container">
+                    <div class="wrapper flexitem">
+                        <a href="#" class="trigger desktop-hide"><span class="i ri-menu-2-line"></span></a>
+                        <div class="left flexitem">
+                            <div class="logo"><a href="/"><span class="circle"></span>.D11Store</a></div>
+                            <nav class="mobile-hide">
+                                <ul class="flexitem second-links">
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="/about">About</a></li>
+
+                                   
+                                    <li class="has-child">
+                                        <a href="#">Categories
+                                            <div class="icon-small"><i class="ri-arrow-down-s-line"></i></div>
+                                        </a>
+                                        <div class="mega">
+                                            <div class="container">
+                                                <div class="wrapper">
+                                                    <div class="flexcol">
+                                                        <div class="row">
+                                                            <h4>Departments</h4>
+                                                            <ul>
+                                                                <% results1.forEach(result => { %>
+                                                                    <li><a href="/page-category/<%= result.id %>"><%= result.name_depart%></a></li>
+                                                                <% }); %>
+                                                                
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flexcol">
+                                                        <div class="row">
+                                                            <h4>Sub-Departments</h4>
+                                                            <ul>
+                                                                <% results2.forEach(result => { %>
+                                                                    <li><a href="/page-sub_category/<%= result.id %>"><%= result.name_sub_depart%></a></li>
+                                                                <% }); %>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flexcol">
+                                                        <div class="row">
+                                                            <h4>Services</h4>
+                                                            <ul>
+                                                                <li><a href="#">Clothing Production</a></li>
+                                                                <li><a href="#">Network Optimization</a></li>
+                                                                <li><a href="#">3D Priting</a></li>
+                                                                <li><a href="#">Interior Design</a></li>
+                                                                <li><a href="#">Crops Optimization</a></li>
+                                                                <li><a href="#">Pet Grooming</a></li>
+                                                                <li><a href="#">Sport Management Software</a></li>
+                                                                <li><a href="#">Transportation</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flexcol">
+                                                        <div class="row">
+                                                            <h4>Top Brands</h4>
+                                                            <ul class="row">
+                                                                <% results3.forEach(result => { %>
+                                                                    <li><a href="/page-company/<%= result.id %>"><%= result.company_name%></a></li>
+                                                                <% }); %>
+                                                                
+                                                            </ul>
+                                                            <a href="#" class="view-all">View all companies<i class="ri-arrow-right-line"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flexcol products">
+                                                        <div class="row">
+                                                            <div class="media">
+                                                                <div class="thumbnail object-cover">
+                                                                    <a href="#">
+                                                                        <img src="/assets/menu/menu_homeinterior.jpg" alt="">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-content">
+                                                                <h4>B2B Solutions!</h4>
+                                                                <a href="#" class="primary-button">Check Now</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <div class="right">
+                            <ul class="flexitem second-links">
+                                <li class="mobile-hide"><a href="#">
+                                    <div class="icon-large"><i class="ri-user-line"></i></div>
+                                </a></li>
+                                
+
+                                <li class="iscart"><a href="#">
+                                    <div class="icon-large">
+                                        <i class="ri-shopping-cart-line"></i>
+                                        <div class="fly-item"><span class="item-number"><%= totalProductsCart %></span></div>
+                                    </div>
+                                    
+                                    <div class="icon-text">
+                                        <div class="mini-text">Total</div>
+                                        <div class="cart-total"><%= subtotalCart.toFixed(2) %> €</div>
+                                    </div>
+                                </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM do header-top -->
+
+            <!-- header-main -->
+            <!-- parte principal do site -->
+            <div class="header-main mobile-hide">
+                <div class="container">
+                    <div class="wrapper flexitem">
+                        <div class="left">
+                            <div class="dpt-cat">
+                                <div class="dpt-head">
+                                    <div class="main-text">All Departments</div>
+                                    <div class="mini-text mobile-hide">Total <%= totalProducts %> Products</div>
+                                    <a href="#" class="dpt-trigger mobile-hide">
+                                        <i class="ri-menu-3-line ri-xl"></i>
+                                        <i class="ri-close-line ri-xl"></i>
+                                    </a>
+                                </div>
+
+                                <div class="dpt-menu">
+                                    <ul class="second-links">
+                                        <% departments.forEach(department => { %>
+                                            <li class="has-child <%= department.name.toLowerCase().replace(/[\s&]/g, '') %>">
+                                                <a href="/page-category/<%= department.id %>">
+                                                    <div class="icon-large"><i class="<%= department.icon %>"></i></div>
+                                                    <%= department.name %>
+                                                    <div class="icon-small"><i class="ri-arrow-right-s-line"></i></div>
+                                                </a>
+                                                <ul>
+                                                    <% department.subDepartments.forEach(subDepartment => { %>
+                                                        <li><a href="/page-sub_category/<%= subDepartment.id %>"><%= subDepartment.name %></a></li>
+                                                    <% }); %>
+                                                </ul>
+                                            </li>
+                                        <% }); %>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="search-box">
+                                <form id="searchForm" class="search" action="/search" method="GET">
+                                    <span class="icon-large"><i class="ri-search-line"></i></span>
+                                    <input id="searchInput" type="search" name="term" placeholder="Search for products">
+                                    <div id="searchResults" class="search-results"></div>
+                                    <button type="submit">Search</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- FIM do header -->
+
+        <main>
+            <div class="single-cart">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="breadcrumb">
+                            <ul class="flexitem">
+                                <li><a href="#">Home</a></li>
+                                <li>Cart</li>
+                            </ul>
+                        </div>
+                        <div class="page-title">
+                            <h1>Shopping Cart</h1>
+                        </div>
+                        <div class="products one cart">
+                            <div class="flexwrap">
+                                <form id="checkout-form" action="/update-cart-and-checkout" method="POST">
+                                    <div class="form-cart">
+                                        <div class="item">
+                                            <table id="cart-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Item</th>
+                                                        <th>Price</th>
+                                                        <th>Qty</th>
+                                                        <th>Total Order</th>
+                                                        <th>Subtotal</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% let subtotal = 0; %>
+                                                    <% results6.forEach(result => { %>
+                                                        <% let itemSubtotal = (result.price * result.min_order * result.quantity); %>
+                                                        <% subtotal += itemSubtotal; %>
+                                                        <tr>
+                                                            <td class="flexitem">
+                                                                <div class="thumbnail object-cover">
+                                                                    <a href="#"><img src="/assets/empresas_img/<%= result.main_img %>" alt=""></a>
+                                                                </div>
+                                                                <div class="content">
+                                                                    <strong><a href="#"><%= result.product_name %></a></strong>
+                                                                    <input type="hidden" name="product_names[]" value="<%= result.product_name %>">
+                                                                    <p>Brand: <%= result.company_name %></p>
+                                                                    <p>Min. Order: <%= result.min_order %> un</p>
+                                                                </div>
+                                                            </td>
+                                                            <td id="price_<%= result.product_id %>"><%= result.price.toFixed(2) %> €</td>
+                                                            <input type="hidden" name="product_prices[]" value="<%= result.price %>">
+                                                            <td>
+                                                                <div class="qty-control flexitem">
+                                                                    <button type="button" class="minus" data-product-id="<%= result.product_id %>" onclick="decreaseQuantityItem('<%= result.product_id %>')">-</button>
+                                                                    <input type="text" name="quantities[]" value="<%= result.quantity %>" class="input_quantity" id="quantity_<%= result.product_id %>">
+                                                                    <input type="hidden" name="productIds[]" value="<%= result.product_id %>">
+                                                                    <button type="button" class="plus" data-product-id="<%= result.product_id %>" onclick="increaseQuantityItem('<%= result.product_id %>')">+</button>
+                                                                </div>
+                                                            </td>
+                                                            <td id="totalOrder_item_<%= result.product_id %>"><%= (result.min_order * result.quantity) %> un</td>
+                                                            <input type="hidden" name="total_orders[]" value="<%= (result.min_order * result.quantity) %>" id="totalOrder_<%= result.product_id %>" data-min-order="<%= result.min_order %>">
+                                                            <td id="subtotal_item_<%= result.product_id %>"><%= itemSubtotal.toFixed(2) %> €</td>
+                                                            <td><a href="#" class="item-remove" data-product-id="<%= result.product_id %>"><i class="ri-close-line"></i></a></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    <% }); %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="cart-summary styled">
+                                        <div class="item">
+                                            <div class="shipping-rate collapse">
+                                                <div class="has-child expand">
+                                                    <a href="#" class="icon-small">Shipping and Tax</a>
+                                                    <div class="content">
+                                                        <div class="delivery_type">
+                                                            <div class="div-cart">
+                                                                <label for="delivery_country">Select Delivery Country</label>
+                                                                <select name="delivery_country" id="delivery_country">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="delivery_type">
+                                                            <div class="div-cart">
+                                                                <label for="delivery_adress">Delivery Address</label>
+                                                                <input type="text" id="delivery_adress" name="delivery_adress" placeholder="Address" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="delivery_speed">
+                                                            <div class="div-cart">
+                                                                <label for="delivery_speed">Select Delivery Speed</label>
+                                                                <select name="delivery_speed" id="delivery_speed" required>
+                                                                    <option value="Standart">Standart</option>
+                                                                    <option value="Express">Express</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="delivery_type">
+                                                            <div class="div-cart">
+                                                                <label for="delivery_date">Select Delivery Date</label>
+                                                                <input type="text" id="delivery_date" name="delivery_date" placeholder="Select a delivery date" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="rate-options variant">
+                                                            <p>
+                                                                <span id="delivery_type" name="delivery_type">Delivery Type: National</span>
+                                                                <input type="hidden" id="delivery_type_input" name="delivery_type" value="National">
+                                                                <label for="flat" class="circle"></label>
+                                                            </p>
+                                                            <p>
+                                                                <span id="delivery_price">Price: 0.00 €</span>
+                                                                <label for="flat" class="circle"></label>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cart-total">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Subtotal</th>
+                                                            <td name="cart_subtotal" id="subtotal"><%= subtotal.toFixed(2) %> €</td>
+                                                            <input type="hidden" name="cart_subtotal" id="cart_subtotal_input" value="<%= subtotal.toFixed(2) %>">
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Shipping <span class="mini-text" id="shipping-speed">(Standart)</span></th>
+                                                            <td name="cart_shipping_price" id="shipping">0.00 €</td>
+                                                            <input type="hidden" name="cart_shipping_price" id="cart_shipping_price_input" value="0.00">
+                                                        </tr>
+                                                        <tr class="grand-total">
+                                                            <th>TOTAL</th>
+                                                            <td name="cart_total" id="total"><strong><%= subtotal.toFixed(2) %> €</strong></td>
+                                                            <input type="hidden" name="cart_total" id="cart_total_input" value="<%= subtotal.toFixed(2) %>">
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" id="checkout-button" class="secondary-button">Checkout</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </main>
+        <!-- Fim do main -->
+
+        <!-- Footer -->
+        <footer>
+            <!-- widgets -->
+            <div class="widgets">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="flexwrap">
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>Help & Support</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="/about#faq">Help</a></li>
+                                        <li><a href="/about#faq">FAQ</a></li>
+                                        <li><a href="/about#shipping">Shipping Methods</a></li>
+                                        <li><a href="/about#contact-us">Contact us</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>User Account</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="#">Login/Signin</a></li>
+                                        <li><a href="/about#faq" onclick="openFAQQuestion('q4')">Account Management</a></li>
+                                        <li><a href="/about#privacy-security">Privacy and Security</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>Payment Info</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="/about#faq" onclick="openFAQQuestion('q6')">Payment Method</a></li>
+                                        <li><a href="/about#faq" onclick="openFAQQuestion('q6')">Credit Cards</a></li>                                  
+                                        <li><a href="/about#faq" onclick="openFAQQuestion('q5')">Refund</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>D11 Store</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="/about#about-us">About Us</a></li>
+                                        <li><a href="/about#our-leadership">Our Leaders</a></li>
+                                        <li><a href="/about#clients-and-partners">Clients and Partners</a></li>
+                                        <li><a href="/about#join-us">Join Us</a></li>
+                                        <li><a href="/about#our-values">Our Values</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim dos widgets -->
+
+            
+            <!-- footer info -->
+            <div class="footer-info">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="flexcol">
+                            <div class="logo">
+                                <a href="#"><span class="circle"></span>.D11Store</a>
+                            </div>
+                            <div class="socials">
+                                <ul class="flexitem">
+                                    <li><a href="#"><i class="ri-twitter-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-facebook-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-instagram-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-linkedin-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-youtube-line"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="mini-text">&copy; Copyright 2024 .D11Store. All right reserved.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim do footer info -->
+        </footer>
+        <!-- Fim do footer -->
+
+        <!-- menu bottom fixed -->
+        <div class="menu-bottom desktop-hide">
+            <div class="container">
+                <div class="wrapper">
+                    <nav>
+                        <ul class="flexitem">
+                            <li>
+                                <a href="/">
+                                    <i class="ri-bar-chart-line"></i>
+                                    <span>Trending</span>
+                                </a>
+                            </li>
+
+                            <li>    
+                                <a href="/dashboard">
+                                    <i class="ri-user-6-line"></i>
+                                    <span>Account</span>
+                                    <div class="fly-item" style="bottom: 5px;">
+                                        <span class="item-number">I</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#0" class="t-search">
+                                    <i class="ri-search-line"></i>
+                                    <span>Search</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do mwnu bottom fixed -->
+
+        <!-- search bottom -->
+        <div class="search-bottom desktop-hide">
+            <div class="container">
+                <div class="wrapper">
+
+                    <form action="" class="search">
+                        <a href="#" class="t-close search-close flexcenter"><i class="ri-close-line"></i></a>
+                        <span class="icon-large"><i class="ri-search-line"></i></span>
+                        <input type="search" placeholder="Your email address" required>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do search bottom -->
+
+        <div class="overlay"></div>
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fslightbox/3.3.1/index.js"></script>
+    <script src="script.js"></script>
+    <script src="script-2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // Adicionar automaticamente o preço de enetrega na página cart
+        document.addEventListener('DOMContentLoaded', function() {
+            const deliveryTypeSpan = document.getElementById('delivery_type');
+            const deliverySpeedSelect = document.getElementById('delivery_speed');
+            const deliveryCountrySelect = document.getElementById('delivery_country');
+            const deliveryPriceSpan = document.getElementById('delivery_price');
+            const shippingElement = document.getElementById('shipping');
+            const shippingSpeedElement = document.getElementById('shipping-speed');
+            const subtotalElement = document.getElementById('subtotal');
+            const totalElement = document.getElementById('total');
+            const deliveryDateInput = document.getElementById('delivery_date');
+            
+
+            // Campos ocultos
+            const cartSubtotalInput = document.getElementById('cart_subtotal_input');
+            const cartShippingPriceInput = document.getElementById('cart_shipping_price_input');
+            const cartTotalInput = document.getElementById('cart_total_input');
+            const deliveryTypeInput = document.getElementById('delivery_type_input');
+            // const cartTotalOrder = document.getElementById('totalOrder').value;
+
+            function updateDeliveryPrice() {
+                const selectedSpeed = deliverySpeedSelect.value;
+                const selectedCountry = deliveryCountrySelect.value;
+
+                // Envia uma solicitação AJAX para obter o preço da entrega
+                fetch(`/get-delivery-price?speed=${selectedSpeed}&country=${selectedCountry}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const price = data.price.toFixed(2);
+                            deliveryPriceSpan.textContent = `Price: ${data.price.toFixed(2)} €`;
+                            shippingElement.textContent = `${data.price.toFixed(2)} €`;
+                            shippingSpeedElement.textContent = `(${data.speed})`;
+                            deliveryTypeSpan.textContent = `Delivery Type: ${data.deliveryType}`;
+
+                            const earliestDate = new Date(data.earliestDate);
+                            flatpickr(deliveryDateInput, {
+                                minDate: earliestDate,
+                                dateFormat: 'd-m-Y'
+                            });
+
+                            // Atualizar campo oculto de shipping
+                            cartShippingPriceInput.value = price;
+                            deliveryTypeInput.value = data.deliveryType;
+
+                            updateTotal();
+                        } else {
+                            deliveryPriceSpan.textContent = 'Price: €0.00';
+                            shippingElement.textContent = '0.00 €';
+                            shippingSpeedElement.textContent = '(Standart)';
+                            deliveryTypeSpan.textContent = 'Delivery Type: Unknown';
+
+                            // Atualizar campo oculto de shipping
+                            cartShippingPriceInput.value = '0.00';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao obter o preço da entrega:', error);
+                    });
+            }
+
+            function updateTotal() {
+                const subtotals = document.querySelectorAll('[id^="subtotal_item_"]');
+                let subtotal = 0;
+                subtotals.forEach(subtotalElement => {
+                    subtotal += parseFloat(subtotalElement.textContent.replace('€', '').trim());
+                });
+                subtotalElement.textContent = `${subtotal.toFixed(2)} €`;
+
+                // Atualizar campo oculto de subtotal
+                cartSubtotalInput.value = subtotal.toFixed(2);
+
+                const shipping = parseFloat(shippingElement.textContent.replace('€', '').trim());
+                const total = subtotal + shipping;
+                totalElement.innerHTML = `<strong>${total.toFixed(2)} €</strong>`;
+
+                // Atualizar campo oculto de total
+                cartTotalInput.value = total.toFixed(2);
+            }
+
+            function updateSubtotalItem(productId) {
+                const quantityInput = document.getElementById(`quantity_${productId}`);
+                const totalOrderInput = document.getElementById(`totalOrder_${productId}`);
+                const price = parseFloat(document.getElementById(`price_${productId}`).textContent.replace('€', '').trim());
+                const quantity = parseInt(quantityInput.value);
+                const totalOrder = parseInt(totalOrderInput.value);
+                const subtotal =  totalOrder * price;
+                const subtotalElement = document.getElementById(`subtotal_item_${productId}`);
+                subtotalElement.textContent = `${subtotal.toFixed(2)} €`;
+                updateTotal();
+            }
+
+            function updateTotalOrder(productId) {
+                const quantityInput = document.getElementById(`quantity_${productId}`);
+                const minOrder = parseInt(document.getElementById(`totalOrder_${productId}`).dataset.minOrder);
+                const quantity = parseInt(quantityInput.value);
+                const totalOrder = minOrder * quantity;
+
+                console.log(`Updating total order for product ${productId}: minOrder=${minOrder}, quantity=${quantity}, totalOrder=${totalOrder}`);
+
+                // Atualiza o total order no DOM
+                const totalOrderElement = document.getElementById(`totalOrder_item_${productId}`);
+                if (totalOrderElement) {
+                    totalOrderElement.textContent = `${totalOrder} un`;
+                } else {
+                    console.error(`Elemento com ID totalOrder_item_${productId} não encontrado`);
+                }
+
+                // Atualiza o valor do campo oculto totalOrder
+                document.getElementById(`totalOrder_${productId}`).value = totalOrder;
+            }
+
+            deliveryCountrySelect.addEventListener('change', updateDeliveryPrice);
+            deliverySpeedSelect.addEventListener('change', updateDeliveryPrice);
+
+            updateDeliveryPrice();
+
+
+            document.querySelectorAll('.item-remove').forEach(button => {
+                button.addEventListener('click', async function(event) {
+                    event.preventDefault();
+
+                    const productId = this.getAttribute('data-product-id');
+
+                    try {
+                        const response = await fetch('/remove-from-cart', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ productId })
+                        });
+
+                        const result = await response.json();
+                        if (result.success) {
+                            // Mostrar mensagem de confirmação
+                            alert('Produto removido do carrinho.');
+
+                            // Recarregar a página
+                            window.location.reload();
+                        } else {
+                            alert('Erro ao remover o produto do carrinho.');
+                        }
+                    } catch (error) {
+                        console.error('Erro:', error);
+                        alert('Erro ao remover o produto do carrinho.');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.plus').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    increaseQuantityItem(productId);
+                });
+            });
+
+            document.querySelectorAll('.minus').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    decreaseQuantityItem(productId);
+                });
+            });
+
+            function decreaseQuantityItem(productId) {
+                const quantityInput = document.getElementById('quantity_' + productId);
+                let quantity = parseInt(quantityInput.value);
+                if (quantity > 1) {
+                    quantity--;
+                    quantityInput.value = quantity;
+                    updateTotalOrder(productId);
+                    updateSubtotalItem(productId);
+                }
+            }
+
+            function increaseQuantityItem(productId) {
+                const quantityInput = document.getElementById('quantity_' + productId);
+                let quantity = parseInt(quantityInput.value);
+                quantity++;
+                quantityInput.value = quantity;
+                updateTotalOrder(productId);
+                updateSubtotalItem(productId);
+            }
+            
+        });
+
+        // Mensagem de confirmação do carrinho
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkoutButton = document.getElementById('checkout-button');
+            const checkoutForm = document.getElementById('checkout-form');
+
+            checkoutButton.addEventListener('click', function(event) {
+                const confirmation = confirm("Do you want to submit your cart?");
+                if (confirmation) {
+                    checkoutForm.submit();
+                }
+            });
+        });
+
+
+        // Remover artigos do icon de carrinho
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.item-remove-smallCart').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    event.preventDefault();
+
+                    const productId = button.getAttribute('data-product-id');
+
+                    try {
+                        const response = await fetch('/remove-from-cart', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ productId })
+                        });
+
+                        const result = await response.json();
+                        if (result.success) {
+                            // Remover o item do DOM
+                            button.closest('.item').remove();
+                            
+                            // Mostrar mensagem de confirmação
+                            alert('Product removed from cart.');
+                        } else {
+                            alert('Erro ao remover o produto do carrinho.');
+                        }
+                    } catch (error) {
+                        console.error('Erro:', error);
+                        alert('Erro ao remover o produto do carrinho.');
+                    }
+                });
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const deliveryCountrySelect = document.getElementById('delivery_country');
+
+            fetch('/api/countries')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(country => {
+                        const option = document.createElement('option');
+                        option.value = country.name;
+                        option.textContent = country.name;
+                        deliveryCountrySelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar os países:', error);
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+    <div class="grid-container">
+        <!------- Header ------>
+        <header class="header">
+            <div class="menu-icon" onclick="openSidebar()">
+                <span class="material-icons-outlined">menu</span>
+            </div>
+            <div class="header-left">
+            </div>
+            <div class="header-right">
+                <span id="account-icon" class="material-icons-outlined" style="padding: 5px;">account_circle</span>
+                <span id="out-icon" class="material-icons-outlined" style="padding: 5px;">logout</span>
+            </div>
+        </header>
+        <!------- End Header ------>
+
+        <!------- Sidebar ------>
+        <aside id="sidebar">
+            <div class="sidebar-title">
+                <div class="sidebar-brand">
+                    <span class="material-icons-outlined">inventory</span> <%= companyName %>
+                </div>
+                <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+            </div>
+
+            <ul class="sidebar-list">
+                <li class="sidebar-list-item" data-target="dashboard">
+                    <span class="material-icons-outlined">dashboard</span> Dashboard
+                </li>
+                <li class="sidebar-list-item" data-target="inventory">
+                    <span class="material-icons-outlined">fact_check</span> Inventory
+                </li>
+                <li class="sidebar-list-item" data-target="purchase-orders">
+                    <span class="material-icons-outlined">add_shopping_cart</span> Purchase Orders
+                </li>
+                <li class="sidebar-list-item" data-target="sales-orders">
+                    <span class="material-icons-outlined">shopping_cart</span> Sales Orders
+                </li>
+                <li class="sidebar-list-item" data-target="reports">
+                    <span class="material-icons-outlined">poll</span> Reports
+                </li>
+                <li class="sidebar-list-item" data-target="liked-products">
+                    <span class="material-symbols-outlined">favorite</span> Liked Products
+                </li>
+                <li class="sidebar-list-item" data-target="messages">
+                    <span class="material-symbols-outlined">sms</span> Messages
+                </li>
+            </ul>
+
+
+
+        </aside>
+        <!------- End Sidebar ------>
+
+        <!------- Main ------>
+        <main class="main-container">
+
+            <!----- Conteúdo da Secção DASHBOARD ----->
+            <div id="dashboard" class="main-content active">
+                <div class="main-title">
+                    <p class="font-weight-bold">DASHBOARD</p>
+                </div>
+
+                <div class="main-cards">
+
+                    <div class="card" data-target="inventory">
+                        <div class="card-inner">
+                            <p class="text-primary">PRODUCTS</p>
+                            <span class="material-icons-outlined text-color">fact_check</span>
+                        </div>
+                        <span class="text-primary font-weight-bold"><%= totalProducts %></span>
+                    </div>
+
+                    <div class="card" data-target="purchase-orders">
+                        <div class="card-inner">
+                            <p class="text-primary">PURCHASE ORDERS</p>
+                            <span class="material-icons-outlined text-color">add_shopping_cart</span>
+                        </div>
+                        <span class="text-primary font-weight-bold"><%= totalOrders %></span>
+                    </div>
+
+                    <div class="card" data-target="sales-orders">
+                        <div class="card-inner">
+                            <p class="text-primary">SALES ORDERS</p>
+                            <span class="material-icons-outlined text-color">shopping_cart</span>
+                        </div>
+                        <span class="text-primary font-weight-bold"><%= totalSales %></span>
+                    </div>
+
+                    <div class="card" data-target="messages">
+                        <div class="card-inner">
+                            <p class="text-primary">MESSAGES</p>
+                            <span class="material-symbols-outlined text-color">sms</span>
+                        </div>
+                        <span class="text-primary font-weight-bold"><%= totalMessages %></span>
+                    </div>
+                </div>
+
+                <div class="charts">
+                    <div class="charts-card">
+                        <p class="chart-title">Top 5 Products</p>
+                        <div id="bar-chart"></div>
+                    </div>
+
+                    <div class="charts-card">
+                        <p class="chart-title">Purchase and Sales Orders</p>
+                        <div id="area-chart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!----- Conteúdo da Secção INVENTORY ----->
+            <div id="inventory" class="main-content">
+                <div class="main-title">
+                    <p class="font-weight-bold">INVENTORY</p>
+                </div>
+
+                <div class="card-content">
+                    <h3>List of Products</h3>
+                    <table border="1">
+                        <tr align="center">
+                            <th width="120" style="color: #294D61;">Img</th>
+                            <th width="120" style="color: #294D61">Name</th>
+                            <th width="120" style="color: #294D61">Ref.</th>
+                            <th width="120" style="color: #294D61">Stock</th>
+                            <th width="120" style="color: #294D61">Price</th>
+                            <th width="120" style="color: #294D61">Min. Order</th>
+                            <th width="150" style="color: #294D61;">Description</th>
+                        </tr>
+                        <% results4.forEach(product => { %>
+                            <tr align="center" data-product-id="<%= product.id %>">
+                                <td><img class="object-cover" src="/assets/empresas_img/<%= product.main_img %>" alt=""></td>
+                                <td><%= product.product_name %></td>
+                                <td><%= product.product_reference %></td>
+                                <td><%= product.stock %></td>
+                                <td><%= product.price.toFixed(2) %> <%= product.price_symbol %></td>
+                                <td><%= product.min_order %></td>
+                                <td class="table-product-description"><%= product.product_description %></td>
+                                <td width="70"><button class="tableBtnEdit">Edit</button></td>
+                            </tr>
+                        <% }); %>
+                    </table>
+                    <div class="table-buttons-div">
+                        <button id="toggleDeleteProductFormButton" class="tableBtn">Delete Product</button>
+                        <button id="toggleAddProductFormButton" class="tableBtn">Add Product</button>
+                    </div>
+                </div>
+
+                <div class="card-content">
+                    <h3>Products in Promotion</h3>
+                    <table border="1">
+                        <tr align="center">
+                            <th width="170" style="color: #294D61;">Img</th>
+                            <th width="170" style="color: #294D61">Name</th>
+                            <th width="170" style="color: #294D61">Ref.</th>
+                            <th width="170" style="color: #294D61">Price</th>
+                            <th width="170" style="color: #294D61">Promo. Price</th>
+                            <th width="170" style="color: #294D61">Discount %</th>
+                        </tr>
+                        <% results5.forEach(product => { %>
+                            <tr align="center">
+                                <td><img class="object-cover" src="/assets/empresas_img/<%= product.main_img %>" alt=""></td>
+                                <td><%= product.product_name %></td>
+                                <td><%= product.product_reference %></td>
+                                <td><%= product.price.toFixed(2) %> <%= product.price_symbol %></td>
+                                <td><%= product.promotion_price.toFixed(2) %> <%= product.price_symbol %></td>
+                                <td><%= product.discount_percentage %>%</td>
+                                <td><button class="tableBtnEditPromo" data-product-id="<%= product.id %>" data-product-name="<%= product.product_name %>">Edit</button></td>
+                            </tr>
+                        <% }); %>
+                    </table>
+                    <div class="table-buttons-div">
+                        <button id="toggleRemoveProductPromotion" class="tableBtn">Remove Promotion</button>
+                        <button id="toggleAddProductPromotion" class="tableBtn">Add Promotion</button>
+                    </div>
+                </div>
+
+                
+                
+                <div id="addProductForm" class="card-content" style="display: none;">
+                    <h3>Add Product Details</h3>
+
+                    <form id="addNewProductForm" action="/addNewProduct" method="POST" enctype="multipart/form-data">
+                        <div class="input-group2">
+                            <div class="input-field-addProduct">
+                                <label for="product_name"><span class="material-icons-outlined">note_add</span>Name:</label>
+                                <input class="input-field" type="text" id="product_name" name="product_name" placeholder="Product Name" required>
+                            </div>
+                            
+                            <div class="input-field-addProduct"> 
+                                <label for="sub_department"><span class="material-icons-outlined">category</span>Select one sub-department:</label>
+                                <select name="sub_department" id="sub_department" required>
+                                    <% results6.forEach(result => { %>
+                                        <option value="<%= result.id %>"><%= result.name_sub_depart %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+
+                            <div class="input-field-addProduct">
+                                <label for="price"><span class="material-icons-outlined">monetization_on</span>Price:</label>
+                                <input class="input-field" type="number" id="price" name="price" placeholder="Price" min="0" step="0.5" required>
+                            </div>
+                            
+                            <div class="input-field-addProduct">
+                                <label for="price_symbol"><span class="material-icons-outlined">local_atm</span>Select a price symbol:</label>
+                                <select name="price_symbol" id="price_symbol" required>
+                                    <option value="€">€</option>
+                                    <option value="€ / kg">€ / kg</option>
+                                    <option value="€ / m">€ / m</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-field-addProduct">
+                                <label for="stock"><span class="material-icons-outlined">inventory</span>Stock:</label>
+                                <input class="input-field" type="number" id="stock" name="stock" placeholder="Stock" min="0" required>
+                            </div>
+                            
+                            <div class="input-field-addProduct">
+                                <label for="min_order"><span class="material-icons-outlined">production_quantity_limits</span>Minimal Order:</label>
+                                <input class="input-field" type="number" id="min_order" name="min_order" placeholder="Min. Order" min="1" required>
+                            </div>
+                            
+                            <div class="input-field-addProduct">
+                                <label for="main_img"><span class="material-icons-outlined">collections</span>Main Image:</label>
+                                <input class="input-field" type="file" name="main_img"  id="main_img"  required>
+                            </div>
+
+                            <div class="input-field-addProduct">
+                                <label for="img_2"><span class="material-icons-outlined">add_photo_alternate</span>Second Image:</label>
+                                <input class="input-field" type="file" name="img_2" id="img_2"  required>
+                            </div>
+
+                            <div class="input-field-addProduct">
+                                <label for="img_3"><span class="material-icons-outlined">add_photo_alternate</span>Third Image:</label>
+                                <input class="input-field" type="file" name="img_3" id="img_3" required>
+                            </div>
+
+                            <div class="input-field-addProduct">
+                                <label for="img_4"><span class="material-icons-outlined">add_photo_alternate</span>Fourth Image:</label>
+                                <input class="input-field" type="file" name="img_4" id="img_4" required>
+                            </div>
+
+                            <div class="input-field-addProduct">
+                                <label for="product_description"><span class="material-icons-outlined">description</span>Description:</label>
+                                <textarea id="product_description" name="product_description" placeholder="Description" style="flex: 100%;" required></textarea>
+                            </div>
+                        </div>
+                        <div class="btn-field-addProduct">
+                            <button type="submit" class="addProductBtn">Add Product</button>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div id="deleteProductForm" class="card-content" style="display: none;">
+                    <h3>Delete Products from Inventory</h3>
+
+                    <form id="DeleteInventoryProductForm" action="/deleteProduct" method="POST">
+                        <div class="input-group2">    
+                            <div class="input-field-addProduct"> 
+                                <label for="product_name"><span class="material-icons-outlined">note_add</span>Select the Product:</label>
+                                <select name="productId" id="productId" required>
+                                    <% results7.forEach(result => { %>
+                                        <option value="<%= result.id %>"><%= result.product_reference %> : <%= result.product_name %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="btn-field-addProduct">
+                            <button type="submit" class="addProductBtn">Delete Product</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="addProductPromotion" class="card-content" style="display: none;">
+
+                    <h3>Add a Promotion to a Product</h3>
+
+                    <form id="addPromotion" action="/addPromotion" method="POST">
+                        <div class="input-group2">    
+                            <div class="input-field-addProduct"> 
+                                <label for="product_name"><span class="material-icons-outlined">note_add</span>Select the Product:</label>
+                                <select name="product_Id" id="product_Id" required>
+                                    <% results7.forEach(result => { %>
+                                        <option value="<%= result.id %>"><%= result.product_reference %> : <%= result.product_name %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            
+                            <div class="input-field-addProduct">
+                                <label for="promotion_price"><span class="material-icons-outlined">monetization_on</span>Promotion Price:</label>
+                                <input class="input-field" type="number" id="promotion_price" name="promotion_price" placeholder="Price" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="btn-field-addProduct">
+                            <button type="submit" class="addProductBtn">Add Promotion</button>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div id="removeProductPromotion" class="card-content" style="display: none;">
+
+                    <h3>Remove Products from Promotion</h3>
+
+                    <form id="RemovePromotionFromProduct" action="/removePromotion" method="POST">
+                        <div class="input-group2">    
+                            <div class="input-field-addProduct"> 
+                                <label for="product_name"><span class="material-icons-outlined">note_add</span>Select the Product:</label>
+                                <select name="product_id_promo" id="product_id_promo" required>
+                                    <% results5.forEach(result => { %>
+                                        <option value="<%= result.id %>"><%= result.product_reference %> : <%= result.product_name %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="btn-field-addProduct">
+                            <button type="submit" class="addProductBtn">Remove Promotion</button>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div id="editTableProducts" class="card-content" style="display: none;">
+
+                    <h3>Edit Products from Inventoy</h3>
+
+                    <form id="editProductForm" action="/editProduct" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" id="product_id" name="productid">
+                        <div class="input-group2" style="display: block;">    
+                            <div class="input-field-addProduct"> 
+                                <label for="field_to_edit"><span class="material-icons-outlined">note_add</span>What field do you want to edit?</label>
+                                <select name="field_to_edit" id="field_to_edit" required>
+                                    <option value="product_name">Name</option>
+                                    <option value="stock">Stock</option>
+                                    <option value="price">Price</option>
+                                    <option value="min_order">Min. Order</option>
+                                    <option value="product_description">Description</option>
+                                    <option value="main_img">Main Img</option>
+                                    <option value="img_2">Img 2</option>
+                                    <option value="img_3">Img 3</option>
+                                    <option value="img_4">Img 4</option>
+                                </select>
+                            </div>
+
+                            <div id="edit_product_name" class="input-field-addProduct hidden">
+                                <label for="product_name"><span class="material-icons-outlined">note_add</span>Name:</label>
+                                <input class="input-field" type="text" id="product_name" name="product_name" placeholder="Product Name" required>
+                            </div>
+
+                            <div id="edit_price" class="input-field-addProduct hidden">
+                                <label for="price"><span class="material-icons-outlined">monetization_on</span>Price:</label>
+                                <input class="input-field" type="number" id="price" name="price" placeholder="Price" min="0" step="0.5" required>
+                            </div>
+                            
+                            <div id="edit_stock" class="input-field-addProduct hidden">
+                                <label for="stock"><span class="material-icons-outlined">inventory</span>Stock:</label>
+                                <input class="input-field" type="number" id="stock" name="stock" placeholder="Stock" min="0" required>
+                            </div>
+                            
+                            <div id="edit_min_order" class="input-field-addProduct hidden">
+                                <label for="min_order"><span class="material-icons-outlined">production_quantity_limits</span>Minimal Order:</label>
+                                <input class="input-field" type="number" id="min_order" name="min_order" placeholder="Min. Order" min="1" required>
+                            </div>
+                            
+                            <div id="edit_main_img" class="input-field-addProduct hidden">
+                                <label for="main_img"><span class="material-icons-outlined">collections</span>Main Image:</label>
+                                <input class="input-field" type="file" name="main_img" id="main_img"  required>
+                            </div>
+
+                            <div id="edit_img_2" class="input-field-addProduct hidden">
+                                <label for="img_2"><span class="material-icons-outlined">add_photo_alternate</span>Second Image:</label>
+                                <input class="input-field" type="file" name="img_2" id="img_2"  required>
+                            </div>
+
+                            <div id="edit_img_3" class="input-field-addProduct hidden">
+                                <label for="img_3"><span class="material-icons-outlined">add_photo_alternate</span>Third Image:</label>
+                                <input class="input-field" type="file" name="img_3" id="img_3" required>
+                            </div>
+
+                            <div id="edit_img_4" class="input-field-addProduct hidden">
+                                <label for="img_4"><span class="material-icons-outlined">add_photo_alternate</span>Fourth Image:</label>
+                                <input class="input-field" type="file" name="img_4" id="img_4" required>
+                            </div>
+
+                            <div id="edit_product_description" class="input-field-addProduct hidden">
+                                <label for="product_description"><span class="material-icons-outlined">description</span>Description:</label>
+                                <textarea id="product_description" name="product_description" placeholder="Description" required></textarea>
+                            </div>
+                            
+                        </div>
+                        <div class="btn-field-addProduct">
+                            <button type="submit" class="addProductBtn">Edit Product</button>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div id="editTableProductsPromotion" class="card-content" style="display: none;">
+
+                    <h3>Edit Promotion Price</h3>
+
+                    <form id="editPromotionPriceForm" action="/editPromotionPrice" method="POST">
+                        <input type="hidden" id="product_id_promo" name="productId">
+                        <div class="input-group2" style="display: block;">    
+                            <div id="promotion_price" class="input-field-addProduct">
+                                <label for="promotion_price"><span class="material-icons-outlined">monetization_on</span>Promotion Price:</label>
+                                <input class="input-field" type="number" id="promotion_price" name="promotion_price" placeholder="Price" min="0" step="0.01" required>
+                            </div>                           
+                        </div>
+                        <div class="btn-field-addProduct">
+                            <button type="submit" class="editPromotionPriceBtn">Edit Product</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+
+            <!----- Conteúdo da Secção PURCHASE ORDERS----->
+            <div id="purchase-orders" class="main-content">
+                <div class="main-title">
+                    <p class="font-weight-bold">PURCHASE ORDERS</p>
+                </div>
+                <div class="card-content">
+                    <h3>Orders List</h3>
+                    <table border="1">
+                        <tr align="center">
+                            <th width="120" style="color: #294D61;">Order ID</th>
+                            <th width="120" style="color: #294D61">Price</th>
+                            <th width="120" style="color: #294D61">Date</th>
+                            <th width="120" style="color: #294D61">Delivery Price</th>
+                            <th width="120" style="color: #294D61">Status</th>
+                            <th width="120" style="color: #294D61">Delivery Date</th>
+                            <th width="120" style="color: #294D61">Delivery Address</th>
+                            <th width="120" style="color: #294D61">Payment Method</th>
+                            <th width="120" style="color: #294D61">Card</th>
+                        </tr>
+                        <% results8.forEach(order => { %>
+                            <tr align="center">
+                                <td><%= order.order_id %></td>
+                                <td><%= order.order_price_total.toFixed(2) %>€</td>
+                                <td><%= order.formatted_order_date %></td>
+                                <td><%= order.delivery_price.toFixed(2) %>€</td>
+                                <td style="color: orange;"><%= order.order_status %></td>
+                                <td><%= order.formatted_delivery_date %></td>
+                                <td><%= order.order_delivery_address %>, <%= order.order_delivery_address_country %></td>
+                                <td><%= order.payment_method %></td>
+                                <td><%= order.payment_method_lastFourDigits %></td>
+                                <td width="70"><button class="tableBtnEditPurchase" data-order-id="<%= order.order_id %>">View</button></td>
+                            </tr>
+                        <% }); %>
+                    </table>
+                </div>
+
+                <div id="tableOrderItems" class="card-content" style="display: none;">
+                    <h3>Order Items</h3>
+                    <table border="1" align="center">
+                        <thead align="center">
+                            <tr>
+                                <th width="120" style="color: #294D61;">Order ID</th>
+                                <th width="120" style="color: #294D61">Img</th>
+                                <th width="120" style="color: #294D61">Ref</th>
+                                <th width="120" style="color: #294D61">Product</th>
+                                <th width="120" style="color: #294D61">Quantity</th>
+                                <th width="120" style="color: #294D61">Price</th>
+                                <th width="120" style="color: #294D61">Seller</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderItemsBody" align="center">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!----- Conteúdo da Secção SALES ORDERS ----->
+            <div id="sales-orders" class="main-content">
+                <div class="main-title">
+                    <p class="font-weight-bold">SALES ORDERS</p>
+                </div>
+                <div class="card-content">
+                    <h3>Sales List</h3>
+                    <table border="1">
+                        <tr align="center">
+                            <th width="120" style="color: #294D61;">Product Img</th>
+                            <th width="120" style="color: #294D61">Ref</th>
+                            <th width="120" style="color: #294D61">Product</th>
+                            <th width="120" style="color: #294D61">Price</th>
+                            <th width="120" style="color: #294D61">Quantity</th>
+                            <th width="120" style="color: #294D61">Date</th>
+                            <th width="120" style="color: #294D61">Buyer</th>
+                        </tr>
+                        <% results9.forEach(product => { %>
+                            <tr align="center">
+                                <td><img class="object-cover" src="/assets/empresas_img/<%= product.img %>" alt=""></td>
+                                <td><%= product.ref %></td>
+                                <td><%= product.product %></td>
+                                <td><%= product.price.toFixed(2) %>€</td>
+                                <td><%= product.quantity %></td>
+                                <td><%= product.sale_date %></td>
+                                <td><%= product.buyer %></td>
+                            </tr>
+                        <% }); %>
+                    </table>
+                </div>
+            </div>
+
+            <!----- Conteúdo da Secção SERVICE QUOTES ----->
+            <div id="service-quotes" class="main-content">
+                <div class="main-title">
+                    <p class="font-weight-bold">SERVICE QUOTES</p>
+                </div>
+                <!-- Conteúdo da seção Service Quotes -->
+            </div>
+
+            <!----- Conteúdo da Secção REPORTS ----->
+            <div id="reports" class="main-content">
+                <div class="main-title">
+                    <p class="font-weight-bold">REPORTS</p>
+                </div>
+                <div class="charts">
+                    <div class="charts-card">
+                        <p class="chart-title">Top 5 Products</p>
+                        <div id="bar-chart-reports"></div>
+                    </div>
+
+                    <div class="charts-card">
+                        <p class="chart-title">Purchase and Sales Orders</p>
+                        <div id="area-chart-reports"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!----- Conteúdo da Secção LIKED PRODUCTS ----->
+            <div id="liked-products" class="main-content">
+                <div class="main-title">
+                    <p class="font-weight-bold">LIKED PRODUCTS</p>
+                </div>
+                <div class="card-content">
+                    <h3>Liked Products List</h3>
+                    <table border="1">
+                        <tr align="center">
+                            <th width="120" style="color: #294D61;">Product Img</th>
+                            <th width="120" style="color: #294D61">Ref</th>
+                            <th width="120" style="color: #294D61">Product</th>
+                            <th width="120" style="color: #294D61">Price</th>
+                        </tr>
+                        <% results10.forEach(product => { %>
+                            <tr align="center">
+                                <td><img class="object-cover" src="/assets/empresas_img/<%= product.image %>" alt=""></td>
+                                <td><%= product.reference %></td>
+                                <td><%= product.name %></td>
+                                <td><%= product.price.toFixed(2) %>€</td>
+                                <td width="70"><button class="tableBtnView" data-product-id="<%= product.id %>">View</button></td>
+                            </tr>
+                        <% }); %>
+                    </table>
+                </div>
+            </div>
+
+            <!----- Conteúdo da Secção MESSAGES ----->
+            <div id="messages" class="main-content">
+                <div class="main-title">
+                    <p class="font-weight-bold">MESSAGES RECEIVED</p>
+                    <div class="table-buttons-div">
+                        <button id="newMessage" class="tableBtn">New<span class="material-icons-outlined" style="padding-left: 5px;">add</span></button>
+                    </div>
+                </div>
+
+                <div id="newMessageForm" class="card-content" style="display: none;">
+                    <div class="iconCloseProfileForms">
+                        <span id="closeFormNewMessage" class="material-icons-outlined">close</span>
+                    </div>
+                    <form id="sendMessageForm" action="/sendeMessage" method="POST">
+                        <h3>New Message</h3>
+                        <div class="input-group2">
+                            <div class="input-field-addProduct">
+                                <label for="company_name"><span class="material-icons-outlined">contact_page</span>To:</label>
+                                <input class="input-field" type="text" name="company_name" id="company_name" placeholder="Company Name" required>
+                            </div>
+                            <div class="input-field-addProduct">
+                                <label for="title"><span class="material-icons-outlined">assignment_late</span>Title:</label>
+                                <input class="input-field" type="text" name="title" id="title" placeholder="Title" required>
+                            </div>
+                            <div class="input-field-addProduct">
+                                <label for="msg_content"><span class="material-icons-outlined">description</span>Message:</label>
+                                <textarea id="msg_content" name="msg_content" placeholder="Text" required></textarea>
+                            </div>
+                            <div class="btn-field-addProduct">
+                                <button type="submit" class="addProductBtn">Send</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <% results11.forEach(message => { %>
+                    <div class="card-content-messages <%= message.is_read ? 'read-message' : '' %>">
+                        <div class="message-h5">
+                            <h5>From: <%= message.sender %></h5>
+                            <h5>Title: <%= message.title %></h5>
+                            <h5>Date: <%= message.formatted_message_date %></h5>
+                            <h5 class="viewMessageIcon" data-message-id="<%= message.message_id %>" data-message-title="<%= message.title %>" data-message-recipient-id="<%= message.recipient_id %>"><span class="material-icons-outlined">visibility</span></h5>
+                        </div>  
+                    </div>
+                <% }); %>
+                <div id="messageCard" class="card-content" style="display: none;">
+                    <div class="deleteMessage">
+                        <span id="closeMessageIcon" class="material-icons-outlined" style="padding: 10px;">close</span>
+                        <!-- <span class="material-icons-outlined" style="padding: 10px;">delete</span> -->
+                        <span id="replyMessageIcon" class="material-icons-outlined" style="padding: 10px;">reply</span>
+                    </div>
+                    <div class="message-h4">
+                        <h4>From: </h4>
+                        <h4>Title: </h4>
+                        <h4>Date: </h4>
+                    </div>
+                    <p></p>
+
+                    <form id="replyMessageForm" action="/replyMessage" method="POST" style="display: none; padding-top: 5px;">
+                        <div class="input-field-addProduct">
+                            <label for="replyMsg"><span class="material-icons-outlined">description</span>Reply to:</label>
+                            <textarea id="replyMsg" name="replyMsg" placeholder="Text" required></textarea>
+                        </div>
+                        <input type="hidden" id="replyRecipientId" name="replyRecipientId">
+                        <input type="hidden" id="replyOriginalTitle" name="replyOriginalTitle">
+                        <div class="table-buttons-div">
+                            <button type="submit" class="tableBtn">Send</button>
+                        </div>
+                    </form>
+                </div>
+
+
+
+
+                <div class="main-title">
+                    <p class="font-weight-bold">MESSAGES SENT</p>
+                </div>
+                <% results12.forEach(message => { %>
+                    <div class="card-content-messages" style="background-color: #C5C6C7;">
+                        <div class="message-h5">
+                            <h5>To: <%= message.recipient %></h5>
+                            <h5>Title: <%= message.title %></h5>
+                            <h5>Date: <%= message.formatted_message_date %></h5>
+                            <h5 class="viewMessageSentIcon" data-message-id="<%= message.message_id %>"><span class="material-icons-outlined">visibility</span></h5>
+                        </div>  
+                    </div>
+                <% }); %>
+
+                <div id="messageSentCard" class="card-content" style="display: none;">
+                    <div class="deleteMessage">
+                        <span id="closeMessageSentIcon" class="material-icons-outlined">close</span>
+                    </div>
+                    <div class="message-h4">
+                        <h4>To: shshshgsggg</h4>
+                        <h4>Title: sjkddddddddd</h4>
+                        <h4>Date: 21/05/2024</h4>
+                    </div>
+                    <p>shshshdh</p>
+                </div>
+            </div>
+
+            <!----- Conteúdo da Secção PROFILE ----->
+            <div id="profile" class="main-content">
+                <div class="main-title">
+                    <p class="font-weight-bold">PROFILE</p>
+                </div>
+                <div class="card-content">
+                    <h3>Profile Details</h3>
+                    <div class="input-group2">
+                        <% results14.forEach(result => { %>
+                            <div class="input-field-addProduct">
+                                <p><span id="btnAlterNameForm" class="material-icons-outlined" style="padding-right: 10px;">edit</span>Name: <%= result.company_name %></p>
+                            </div>
+
+                            <div class="input-field-addProduct">
+                                <p><span id="btnAlterContactForm" class="material-icons-outlined" style="padding-right: 10px;">edit</span>Contact: <%= result.contact %></p>
+                            </div>
+                                
+                                
+                            <div class="input-field-addProduct">
+                                <p><span id="btnAlterAdressForm" class="material-icons-outlined" style="padding-right: 10px;">edit</span>Address: <%= result.adress %></p>
+                            </div>
+                                
+                            <div class="input-field-addProduct">
+                                <p><span id="btnAlterEmailForm" class="material-icons-outlined" style="padding-right: 10px;">edit</span>Email: <%= result.email %></p>
+                            </div>
+
+                            <div class="input-field-addProduct">
+                                <p><span id="btnAlterDescriptionForm" class="material-icons-outlined" style="padding-right: 10px;">edit</span>Description: <%= result.company_description %></p>
+                            </div>
+
+                            <div class="input-field-addProduct">
+                                <p><span id="btnAlterPasswdForm" class="material-icons-outlined" style="padding-right: 10px;">edit</span>Password: *****</p>
+                            </div>
+
+                            <div class="input-field-addProduct">
+                                <p><span id="btnAlterImageForm" class="material-icons-outlined" style="padding-right: 10px;">edit</span>Image: <img style="margin-left: 30px; margin-top: 30px;" class="object-cover" src="/assets/empresas_img/<%= result.main_img %>" alt=""></p>
+                            </div>
+                        <% }); %>
+                    </div>
+                </div>
+
+                <div id="alterImageForm" class="card-content" style="display: none;">
+                    <div class="iconCloseProfileForms">
+                        <span id="closeFormAlterImage" class="material-icons-outlined">close</span>
+                    </div>
+                    <form id="editImageForm" action="/editProfileImage" method="POST" enctype="multipart/form-data">
+                        <h3>Alter Profile Main Image</h3>
+                        <div class="input-field-addProduct">
+                            <label for="main_img"><span class="material-icons-outlined">collections</span>Main Image:</label>
+                            <input class="input-field" type="file" name="main_img" id="main_img" required>
+                        </div>
+                        <div class="btn-field-addProduct">
+                            <button type="submit" class="addProductBtn">Alter Image</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="alterContactForm" class="card-content" style="display: none;">
+                    <div class="iconCloseProfileForms">
+                        <span id="closeFormAlterContact" class="material-icons-outlined">close</span>
+                    </div>
+                    <form id="editContactForm" action="/editProfileContact" method="POST">
+                        <h3>Alter Profile Contact</h3>
+                        <div class="input-field-addProduct">
+                            <label for="contact"><span class="material-icons-outlined">phone</span>Contact:</label>
+                            <input class="input-field" type="tel" name="contact" id="contact" required>
+                        </div>
+                        <div class="btn-field-addProduct">
+                            <button type="submit" class="addProductBtn">Alter Contact</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="alterNameForm" class="card-content" style="display: none;">
+                    <div class="iconCloseProfileForms">
+                        <span id="closeFormAlterName" class="material-icons-outlined">close</span>
+                    </div>
+                    <form id="editNameForm" action="/editProfileName" method="POST">
+                        <h3>Alter Profile Name</h3>
+                        <div class="input-field-addProduct">
+                            <label for="name"><span class="material-icons-outlined">note_add</span>Name:</label>
+                            <input class="input-field" type="text" name="name" id="name" required>
+                        </div>
+                        <div class="btn-field-addProduct">
+                            <button type="submit" class="addProductBtn">Alter Name</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="alterAdressForm" class="card-content" style="display: none;">
+                    <div class="iconCloseProfileForms">
+                        <span id="closeFormAlterAdress" class="material-icons-outlined">close</span>
+                    </div>
+                    <form id="editAdressForm" action="/editProfileAdress" method="POST">
+                        <h3>Alter Profile Adress</h3>
+                        <div class="input-field-addProduct">
+                            <label for="adress"><span class="material-icons-outlined">home</span>Adress:</label>
+                            <input class="input-field" type="text" name="adress" id="adress" required>
+                        </div>
+                        <div class="btn-field-addProduct">
+                            <button type="submit" class="addProductBtn">Alter Adress</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="alterEmailForm" class="card-content" style="display: none;">
+                    <div class="iconCloseProfileForms">
+                        <span id="closeFormAlterEmail" class="material-icons-outlined">close</span>
+                    </div>
+                    <form id="editEmailForm" action="/editProfileEmail" method="POST">
+                        <h3>Alter Profile Email</h3>
+                        <div class="input-field-addProduct">
+                            <label for="email"><span class="material-icons-outlined">email</span>Email:</label>
+                            <input class="input-field" type="email" name="email" id="email" required>
+                        </div>
+                        <div class="btn-field-addProduct">
+                            <button type="submit" class="addProductBtn">Alter Email</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="alterDescriptionForm" class="card-content" style="display: none;">
+                    <div class="iconCloseProfileForms">
+                        <span id="closeFormAlterDescription" class="material-icons-outlined">close</span>
+                    </div>
+                    <form id="editDescriptionForm" action="/editProfileDescription" method="POST">
+                        <h3>Alter Profile Description</h3>
+                        <div class="input-field-addProduct">
+                            <label for="description"><span class="material-icons-outlined">description</span>Description:</label>
+                            <textarea id="description" name="description" placeholder="Description" required></textarea>
+                        </div>
+                        <div class="btn-field-addProduct">
+                            <button type="submit" class="addProductBtn">Alter Description</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="alterPasswdForm" class="card-content" style="display: none;">
+                    <div class="iconCloseProfileForms">
+                        <span id="closeFormAlterPasswd" class="material-icons-outlined">close</span>
+                    </div>
+                    <form id="editPasswordForm" action="/editProfilePassword" method="POST">
+                        <h3>Alter Profile Password</h3>
+                        <div class="input-field-addProduct">
+                            <label for="new_password"><span class="material-icons-outlined">lock</span>New Password:</label>
+                            <input class="input-field" type="password" name="new_password" id="new_password" required>
+                        </div>
+                        <div class="input-field-addProduct">
+                            <label for="confirm_password"><span class="material-icons-outlined">lock</span>Check Password:</label>
+                            <input class="input-field" type="password" name="confirm_password" id="confirm_password" required>
+                        </div>
+                        <div class="btn-field-addProduct">
+                            <button type="submit" class="addProductBtn">Alter Password</button>
+                        </div>
+                    </form>
+                </div>
+
+                
+            </div>
+
+            
+        </main>
+        <!------- End Main ------>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.49.1/apexcharts.min.js"></script>
+    <script src="scripts-admin/admin-script.js"></script>
+    <script src="scripts-admin/inventory.js" defer></script>
+    <script src="scripts-admin/purchase-orders.js"></script>
+    <script src="scripts-admin/messages.js"></script>
+    <script src="scripts-admin/profile.js"></script>
+    <script src="scripts-admin/reports.js"></script>
+    <script src="scripts-admin/likedProducts.js"></script>
+    <script>
+        //AddProductForm
+        document.addEventListener('DOMContentLoaded', function() {
+            const addNewProductForm = document.getElementById('addNewProductForm');
+
+            addNewProductForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevenir o comportamento padrão do formulário
+
+                const formData = new FormData(addNewProductForm);
+
+                fetch('/addNewProduct', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message); // Mostrar a mensagem de sucesso
+                        window.location.reload(); // Recarregar a página
+                    } else {
+                        alert(data.message); // Mostrar a mensagem de erro, se houver
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro. Por favor, tente novamente.');
+                });
+            });
+        });
+
+        //DeleteProductForm
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteProductForm = document.getElementById('DeleteInventoryProductForm');
+
+            deleteProductForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevenir o comportamento padrão do formulário
+
+                const productSelect = document.getElementById('productId');
+                const productId = productSelect.value;
+
+                if (confirm('Are you sure you want to delete this product?')) {
+                    fetch('/deleteProduct', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ productId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            window.location.reload();
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error deleting product.');
+                    });
+                }
+            });
+            
+        });
+
+        //AddPromotionForm
+        document.addEventListener('DOMContentLoaded', function() {
+            const addPromotion = document.getElementById('addPromotion');
+
+            addPromotion.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevenir o comportamento padrão do formulário
+
+                const productSelect = document.getElementById('product_Id');
+                const productId = productSelect.value;
+
+                const promotionSelect = document.getElementById('promotion_price');
+                const promotion_price = promotionSelect.value;
+
+                if (confirm('Are you sure you want to add a pomotion to this product?')) {
+                    fetch('/addPromotion', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ productId: productId, promotion_price: promotion_price })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            window.location.reload();
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error deleting product.');
+                    });
+                }
+            });
+        });
+
+        //DeletePomotionForm
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteProductForm = document.getElementById('RemovePromotionFromProduct');
+
+            deleteProductForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevenir o comportamento padrão do formulário
+
+                const productSelect = document.getElementById('product_id_promo');
+                const productId = productSelect.value;
+
+                if (confirm('Are you sure you want to remove this promotion?')) {
+                    fetch('/removePromotion', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ productId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            window.location.reload();
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error deleting product.');
+                    });
+                }
+            });
+            
+        });
+
+
+        // BAR CHART
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/top-products')
+                .then(response => response.json())
+                .then(data => {
+                    const categories = data.map(item => item.product_name);
+                    const salesData = data.map(item => item.sales_count);
+
+                    const barChartOptions = {
+                        series: [{
+                            data: salesData
+                        }],
+                        chart: {
+                            type: 'bar',
+                            height: 350,
+                            toolbar: {
+                                show: false
+                            },
+                        },
+                        colors: [
+                            "#3BBA9C",
+                            "#294D61",
+                        ],
+                        plotOptions: {
+                            bar: {
+                                distributed: true,
+                                borderRadius: 4,
+                                borderRadiusApplication: 'end',
+                                horizontal: false,
+                                columnWidth: '40%',
+                            }
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        legend: {
+                            show: false
+                        },
+                        xaxis: {
+                            categories: categories,
+                        },
+                        yaxis: {
+                            title: {
+                                text: "Sales"
+                            }
+                        }
+                    };
+
+                    const barChart = new ApexCharts(document.querySelector("#bar-chart"), barChartOptions);
+                    barChart.render();
+                })
+                .catch(error => console.error('Error fetching top products:', error));
+        });
+
+        // AREA CHART
+
+        var areaChartOptions = {
+            series: [{
+                name: 'Purchase Orders',
+                data: [31, 40, 28, 51, 42, 109, 100]
+            }, {
+                name: 'Sales Orders',
+                data: [11, 32, 45, 32, 34, 52, 41]
+            }],
+            chart: {
+                height: 350,
+                type: 'area',
+                toolbar: {
+                    show: false,
+                },
+            },
+            colors: ["#294D61", "#3BBA9C"],
+            dataLabels: {
+                enabled: false,
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            labels: ['Jan', 'Feb','Mar','Apr','May','Jun','Jul'],
+            markers: {
+                size: 0
+            },
+            yaxis: [
+                {
+                    title: {
+                        text: 'Purchase Orders',
+                    },
+                },
+                {
+                    opposite: true,
+                    title: {
+                        text: 'Sales Orders',
+                    },
+                },
+            ],
+            tooltip: {
+                shared: true,
+                intersect: false,
+            }
+        };
+
+        var areaChart = new ApexCharts(document.querySelector("#area-chart"), areaChartOptions);
+        areaChart.render();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce Website</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+</head>
+<body>
+    <div id="page" class="site page-single">
+
+        <aside class="site-off desktop-hide">
+            <div class="off-canvas">
+                <div class="canvas-head flexitem">
+                    <div class="logo"><a href="/"><span class="circle"></span>.D11Store</a></div>
+                    <a href="#" class="t-close flexcenter"><i class="ri-close-line"></i></a>
+                </div>
+                <div class="departments"></div>
+                <nav></nav>
+                <div class="thetop-nav"></div>
+            </div>
+        </aside>
+
+        <header>
+            <!--Responsive div, não mexer-->
+            <div class="header-top mobile-hide">
+                <div class="container">
+                    <div class="wrapper flexitem">   
+                    </div>
+                </div>
+            </div>
+
+            <!-- header-top -->
+            <div class="header-nav">
+                <div class="container">
+                    <div class="wrapper flexitem">
+                        <a href="#" class="trigger desktop-hide"><span class="i ri-menu-2-line"></span></a>
+                        <div class="left flexitem">
+                            <div class="logo"><a href="/"><span class="circle"></span>.D11Store</a></div>
+                            <nav class="mobile-hide">
+                                <ul class="flexitem second-links">
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="/about">About</a></li>
+
+                                   
+                                    <li class="has-child">
+                                        <a href="#">Categories
+                                            <div class="icon-small"><i class="ri-arrow-down-s-line"></i></div>
+                                        </a>
+                                        <div class="mega">
+                                            <div class="container">
+                                                <div class="wrapper">
+                                                    <div class="flexcol">
+                                                        <div class="row">
+                                                            <h4>Departments</h4>
+                                                            <ul>
+                                                                <% results1.forEach(result => { %>
+                                                                    <li><a href="/page-category/<%= result.id %>"><%= result.name_depart%></a></li>
+                                                                <% }); %>
+                                                                
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flexcol">
+                                                        <div class="row">
+                                                            <h4>Sub-Departments</h4>
+                                                            <ul>
+                                                                <% results10.forEach(result => { %>
+                                                                    <li><a href="/page-sub_category/<%= result.id %>"><%= result.name_sub_depart%></a></li>
+                                                                <% }); %>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flexcol">
+                                                        <div class="row">
+                                                            <h4>Top Brands</h4>
+                                                            <ul class="row">
+                                                                <% results2.forEach(result => { %>
+                                                                    <li><a href="/page-company/<%= result.id %>"><%= result.company_name%></a></li>
+                                                                <% }); %>
+                                                                
+                                                            </ul>
+                                                            <a href="#" class="view-all">View all companies<i class="ri-arrow-right-line"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flexcol products">
+                                                        <div class="row">
+                                                            <div class="media">
+                                                                <div class="thumbnail object-cover">
+                                                                    <a href="#">
+                                                                        <img src="/assets/menu/menu_homeinterior.jpg" alt="">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-content">
+                                                                <h4>B2B Solutions!</h4>
+                                                                <a href="/" class="primary-button">Check Now</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <div class="right">
+                            <ul class="flexitem second-links">
+                                <li class="mobile-hide"><a href="#" id="showModalIcon">
+                                    <div class="icon-large">
+                                        <% if (isAuthenticated) { %>
+                                            <a href="/dashboard"><i class="ri-user-line"></i></a>
+                                            <div class="fly-item"><span class="item-number">I</span></div>
+                                        <% } else{ %>
+                                            <i class="ri-user-line"></i>
+                                        <%}%>
+                                    </div>
+                                </a></li>
+
+                                <% if (isAuthenticated) { %>
+                                <li class="iscart">
+                                    <a href="#">
+                                        <div class="icon-large">
+                                            <i class="ri-shopping-cart-line"></i>
+                                            <div class="fly-item"><span class="item-number"><%= cartItems.length %></span></div>
+                                        </div>
+                                        
+                                        <div class="icon-text">
+                                            <div class="mini-text">Total</div>
+                                            <div class="cart-total"><%= cartItems.reduce((acc, item) => acc + ((item.price * item.min_order)*item.quantity), 0).toFixed(2) %> €</div>
+                                        </div>
+                                    </a>
+
+                                    <div class="mini-cart">
+                                        <div class="content">
+                                            <div class="cart-head">
+                                                <%= cartItems.length %> items in cart
+                                            </div>
+                                            <div class="cart-body">
+                                                <ul class="products mini">
+                                                    <% cartItems.forEach(item => { %>
+                                                    <li class="item">
+                                                        <div class="thumbnail object-cover">
+                                                            <a href="#"><img src="/assets/empresas_img/<%= item.main_img %>" alt=""></a>
+                                                        </div>
+                                                        <div class="item-content">
+                                                            <p><a href="#"><%= item.product_name %></a></p>
+                                                            <span class="price">
+                                                                <span><%= item.price.toFixed(2) %> €</span>
+                                                                <span class="fly-item"><span><%= (item.quantity * item.min_order) %> x</span>
+                                                            </span>
+                                                        </div>
+                                                        <a href="" class="item-remove" data-product-id="<%= item.product_id %>"><i class="ri-close-line"></i></a>
+                                                    </li>
+                                                    <% }) %>
+                                                </ul>
+                                            </div>
+                                            <div class="cart-footer">
+                                                <div class="subtotal">
+                                                    <p>Subtotal</p>
+                                                    <p><strong><%= cartItems.reduce((acc, item) => acc + ((item.price * item.min_order)*item.quantity), 0).toFixed(2) %> €</strong></p>
+                                                </div>
+                                                <% if (cartItems.length > 0) { %>
+                                                    <div class="actions">
+                                                        <a href="/cart" class="primary-button">View Cart</a>
+                                                    </div>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <div class="icon-large" style="margin-left: 15px; cursor: pointer;" id="logout-icon">
+                                    <i class="ri-logout-box-r-line"></i>
+                                </div>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM do header-top -->
+
+            <!-- header-main -->
+            <!-- parte principal do site -->
+            <div class="header-main mobile-hide">
+                <div class="container">
+                    <div class="wrapper flexitem">
+                        <div class="left">
+                            <div class="dpt-cat">
+                                <div class="dpt-head">
+                                    <div class="main-text">All Departments</div>
+                                    <div class="mini-text mobile-hide">Total <%= totalProducts %> Products</div>
+                                    <a href="#" class="dpt-trigger mobile-hide">
+                                        <i class="ri-menu-3-line ri-xl"></i>
+                                        <i class="ri-close-line ri-xl"></i>
+                                    </a>
+                                </div>
+
+                                <div class="dpt-menu">
+                                    <ul class="second-links">
+                                        <% departments.forEach(department => { %>
+                                            <li class="has-child <%= department.name.toLowerCase().replace(/[\s&]/g, '') %>">
+                                                <a href="/page-category/<%= department.id %>">
+                                                    <div class="icon-large"><i class="<%= department.icon %>"></i></div>
+                                                    <%= department.name %>
+                                                    <div class="icon-small"><i class="ri-arrow-right-s-line"></i></div>
+                                                </a>
+                                                <ul>
+                                                    <% department.subDepartments.forEach(subDepartment => { %>
+                                                        <li><a href="/page-sub_category/<%= subDepartment.id %>"><%= subDepartment.name %></a></li>
+                                                    <% }); %>
+                                                </ul>
+                                            </li>
+                                        <% }); %>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="search-box">
+                                <form id="searchForm" class="search" action="/search" method="GET">
+                                    <span class="icon-large"><i class="ri-search-line"></i></span>
+                                    <input id="searchInput" type="search" name="term" placeholder="Search for products">
+                                    <div id="searchResults" class="search-results"></div>
+                                    <button type="submit">Search</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- FIM do header -->
+
+        <main>
+
+            <div class="single-product">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="breadcrumb">
+                            <ul class="flexitem">
+                                <li><a href="#">Home</a></li>
+                                <li><%= companyName %></li>
+                            </ul>
+                        </div>
+
+                        <!--breadcrumb-->
+                        <div class="column">
+                            <div class="products one">
+                                <div class="flexwrap">
+                                    <div class="row">
+                                        <div class="item is_sticky">
+                                            <div class="price">
+                                            </div>
+                                            <div class="big-image">
+                                                <img src="/assets/empresas_img/<%= companyDetails.main_img %>" alt="">
+                                            </div>
+
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="item">
+                                            <h1><%= companyDetails.company_name %></h1>
+                                            <div class="content">
+                                                <div class="rating">
+                                                    <div class="stars">
+                                                        <i class="ri-star-fill" style="color:orange"></i>
+                                                        <i class="ri-star-fill" style="color:orange"></i>
+                                                        <i class="ri-star-fill" style="color:orange"></i>
+                                                        <i class="ri-star-fill" style="color:orange"></i>
+                                                        <i class="ri-star-fill" style="color:orange"></i>
+                                                    </div>
+                                                    <p class="mini-text">2,251 reviews</p>
+                                                </div>
+
+                                                <div class="stock-sku">
+                                                    <% products.forEach(product => { %>
+                                                        <span class="sku mini-text"><%= product.name_depart %></span>
+                                                    <% }); %>
+                                                </div>
+
+                                                <% if (isAuthenticated) { %>
+                                                    <div class="actions">
+                                                        <div class="button-cart">
+                                                            <button id="message-button" class="primary-button">Message Company</button>
+                                                        </div>
+                                                    </div>
+                                                    
+    
+                                                    <div id="message-form" style="display: none;">
+                                                        <div class="reviews">
+                                                            <h4>Write a message</h4>
+                                                            <form id="sendMessagePageCompany" action="/send-Message" method="POST">
+                                                                <p>
+                                                                    <input type="hidden" name="remetente" id="remetente" value="<%= companyDetails.id %>"></input>
+                                                                    <label for="summary">Summary</label>
+                                                                    <input type="text" name="summary" id="summary" placeholder="Summary">
+                                                                </p>
+    
+                                                                <p>
+                                                                    <label for="message">MESSAGE</label>
+                                                                    <textarea name="message" id="message" placeholder="Text" cols="30" rows="10"></textarea>
+                                                                </p>
+                                                                <p><button type="submit" class="primary-button" style="border: none; cursor: pointer;">Send Message</button></p>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                <% } %>
+                                                
+                                                
+
+                                                <div class="description collapse">
+                                                    <ul>
+                                                        <li class="has-child">
+                                                            <a href="#0" class="icon-small">Information</a>
+                                                            <ul class="content">
+                                                                <li><span>Email</span> <span><%= companyDetails.email %></span></li>
+                                                                <li><span>Contact</span> <span><%= companyDetails.contact %></span></li>
+                                                                <li><span>Address</span> <span><%= companyDetails.adress %></span></li>
+                                                            </ul>
+                                                        </li>
+
+                                                        <li class="has-child">
+                                                            <a href="#0" class="icon-small">Details</a>
+                                                            <div class="content">
+                                                                <p><%= companyDetails.company_description %></p>
+                                                            </div>
+                                                        </li>
+
+                                                        <li class="has-child">
+                                                            <a href="#" class="icon-small">Reviews<span class="mini-text">2.2k</span></a>
+                                                            <div class="content">
+                                                                <div class="reviews">
+                                                                    <h4>Customer Reviews</h4>
+                                                                    <div class="review-block">
+                                                                        <div class="review-block-head">
+                                                                            <div class="flexitem">
+                                                                                <span class="rate-sum">4.9</span>
+                                                                                <span>2,251 Reviews</span>
+                                                                            </div>
+                                                                            <% if (isAuthenticated) { %>
+                                                                                <a href="#review-form" class="secondary-button">Write review</a>
+                                                                            <% } %>
+                                                                        </div>
+                                                                        <div class="review-block-body">
+                                                                            <ul>
+                                                                                <li class="item">
+                                                                                    <div class="review-form">
+                                                                                        <p class="person">Review by Sarah</p>
+                                                                                        <p class="mini-text">On 7/7/22</p>
+                                                                                    </div>
+                                                                                    
+                                                                                    <div class="review-rating rating">
+                                                                                        <div class="stars"></div>
+                                                                                    </div>
+                                                                                    <div class="review-title">
+                                                                                        <p>Awesome product!</p>
+                                                                                    </div>
+                                                                                    <div class="review-text">
+                                                                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aliquam sed, placeat veniam facere id? Laborum, numquam quae facere praesentium nobis suscipit nesciunt ducimus rerum inventore iure in laudantium quas?</p>
+                                                                                    </div>
+                                                                                </li>
+
+                                                                                <li class="item">
+                                                                                    <div class="review-form">
+                                                                                        <p class="person">Review by Faizal</p>
+                                                                                        <p class="mini-text">On 1/7/22</p>
+                                                                                    </div>
+                                                                                    
+                                                                                    <div class="review-rating rating">
+                                                                                        <div class="stars"></div>
+                                                                                    </div>
+                                                                                    <div class="review-title">
+                                                                                        <p>Awesome product!</p>
+                                                                                    </div>
+                                                                                    <div class="review-text">
+                                                                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aliquam sed, placeat veniam facere id? Laborum, numquam quae facere praesentium nobis suscipit nesciunt ducimus rerum inventore iure in laudantium quas?</p>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                            <div class="second-links">
+                                                                                <a href="#" class="view-all">View all reviews <i class="ri-arrow-right-line"></i></a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <% if (isAuthenticated) { %>
+                                                                            <div id="review-form" class="review-form">
+                                                                                <h4>Write a review</h4>
+                                                                                <div class="rating">
+                                                                                    <p>Are you satisfied enough?</p>
+                                                                                    <div class="rate-this">
+                                                                                        <input type="radio" name="rating" id="star5">
+                                                                                        <label for="star5"><i class="ri-star-fill"></i></label>
+
+                                                                                        <input type="radio" name="rating" id="star4">
+                                                                                        <label for="star4"><i class="ri-star-fill"></i></label>
+
+                                                                                        <input type="radio" name="rating" id="star3">
+                                                                                        <label for="star3"><i class="ri-star-fill"></i></label>
+
+                                                                                        <input type="radio" name="rating" id="star2">
+                                                                                        <label for="star2"><i class="ri-star-fill"></i></label>
+
+                                                                                        <input type="radio" name="rating" id="star1">
+                                                                                        <label for="star1"><i class="ri-star-fill"></i></label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <form action="">
+                                                                                    <p>
+                                                                                        <label>Name</label>
+                                                                                        <input type="text">
+                                                                                    </p>
+
+                                                                                    <p>
+                                                                                        <label>Summary</label>
+                                                                                        <input type="text">
+                                                                                    </p>
+
+                                                                                    <p>
+                                                                                        <label>Review</label>
+                                                                                        <textarea cols="30" rows="10"></textarea>
+                                                                                    </p>
+                                                                                    <p><a href="#" class="primary-button">Submit Review</a></p>
+                                                                                </form>
+                                                                            </div>
+                                                                        <% } %>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Featured products -->
+            <div class="features">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="column">
+                            <div class="sectop flexitem">
+                                <h2><span class="circle"></span><span>Related Products</span></h2>
+                                <div class="second-links">
+                                    <a href="/page-category/<%= departId %>" class="view-all">View all<i class="ri-arrow-right-line"></i></a>
+                                </div>
+                            </div>
+
+                            <div class="products main flexwrap">
+                                <% results8.forEach(result => { %>
+                                    <div class="item">
+                                        <div class="media">
+                                            <div class="thumbnail object-cover">
+                                                <a href="/page-single/<%= result.id %>">
+                                                    <img src="/assets/empresas_img/<%= result.main_img %>" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="hoverable">
+                                                <ul>
+                                                    <% if (isAuthenticated) { %>
+                                                        <li><a href="" class="like-icon" data-product-id="<%= result.id %>"><i class="ri-heart-line"></i></a></li>
+                                                    <% } %>
+                                                </ul>
+                                            </div>
+                                            <% if (result.is_promotion) { %>
+                                                <div class="discount circle flexcenter"><span><%= result.discount_percentage %>%</span></div>
+                                            <% } %>
+                                        </div>
+                                        <div class="content">
+                                            <div class="rating">
+                                                <div class="stars">
+                                                    <i class="ri-star-fill" style="color:orange"></i>
+                                                    <i class="ri-star-fill" style="color:orange"></i>
+                                                    <i class="ri-star-fill" style="color:orange"></i>
+                                                    <i class="ri-star-fill" style="color:orange"></i>
+                                                    <i class="ri-star-fill" style="color:orange"></i>
+                                                </div>
+                                                <span class="mini-text">(1,955)</span>
+                                            </div>
+
+                                            <h3><a href="/page-single/<%= result.id %>"><%= result.product_name %></a></h3>
+                                            <div class="price">
+                                                <span class="current"><%= result.is_promotion ? result.formatted_promotion_price : result.formatted_price %><%= result.price_symbol %></span>
+                                                <% if (result.is_promotion) { %>
+                                                    <span class="normal mini-text"><%= result.formatted_price %><%= result.price_symbol %></span>
+                                                <% } %>
+                                            </div>
+                                            <div class="mini-text">
+                                                <p class="main-links"><a href="/page-company/<%= result.company_id %>">By: <%= result.company_name %></a></p>
+                                            </div>
+
+                                            <div class="footer">
+                                                <ul class="mini-text">
+                                                    <li>Min. Order: <%= result.min_order %> un</li>
+                                                    <% if (result.stock > result.min_order) { %>
+                                                        <li>Ready to Ship</li>
+                                                    <% } else { %>
+                                                        <li>Out of Stock</li>
+                                                    <% } %>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM das Featured products -->
+
+            <!-- Banners -->
+            <div class="banners">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="column">
+                            <div class="banner flexwrap">
+                                <div class="row">
+                                    <div class="item">
+                                        <div class="image">
+                                            <img src="/assets/banner/banner1.jpg" alt="">
+                                        </div>
+                                        <div class="text-content flexcol">
+                                            <h4>Service!</h4>
+                                            <h3><span>Design your business</span><br>Interior design</h3>
+                                            <a href="#" class="primary-button">Discover Now</a>
+                                        </div>
+                                        <a href="#" class="over-link"></a>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="item">
+                                        <div class="image">
+                                            <img src="/assets/banner/banner3.1.jpg" alt="">
+                                        </div>
+                                        <div class="text-content flexcol">
+                                            <h4>Service!</h4>
+                                            <h3><span>Ship your products anywhere</span><br>Transportation Services</h3>
+                                            <a href="#" class="primary-button">Discover Now</a>
+                                        </div>
+                                        <a href="#" class="over-link"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--banners-->
+
+                            <div class="product-categories flexwrap">
+                                <div class="row">
+                                    <div class="item">
+                                        <div class="image">
+                                            <img src="/assets/banner/procat1.jpg" alt="">
+                                        </div>
+                                        <div class="content mini-links">
+                                            <h4>Health & Beauty</h4>
+                                            <ul class="flexcol">
+                                                <% results4.forEach(result => { %>
+                                                    <li><a href="/page-single/<%= result.id %>"><%= result.product_name %></a></li>
+                                                <% }); %>
+                                            </ul>
+                                            <div class="second-links">
+                                                <a href="/page-category/5" class="view-all">View all<i class="ri-arrow-right-line"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="item">
+                                        <div class="image">
+                                            <img src="/assets/banner/procat2.jpg" alt="">
+                                        </div>
+                                        <div class="content mini-links">
+                                            <h4>Eletronics & Technology</h4>
+                                            <ul class="flexcol">
+                                                <% results5.forEach(result => { %>
+                                                    <li><a href="/page-single/<%= result.id %>"><%= result.product_name %></a></li>
+                                                <% }); %>
+                                            </ul>
+                                            <div class="second-links">
+                                                <a href="/page-category/3" class="view-all">View all<i class="ri-arrow-right-line"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="item">
+                                        <div class="image">
+                                            <img src="/assets/banner/procat3.jpg" alt="">
+                                        </div>
+                                        <div class="content mini-links">
+                                            <h4>Agriculture</h4>
+                                            <ul class="flexcol">
+                                                <% results6.forEach(result => { %>
+                                                    <li><a href="/page-single/<%= result.id %>"><%= result.product_name %></a></li>
+                                                <% }); %>
+                                            </ul>
+                                            <div class="second-links">
+                                                <a href="/page-category/6" id="load-more" class="view-all">View all<i class="ri-arrow-right-line"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM dos banners -->
+        </main>
+        <!-- Fim do main -->
+
+        <!-- Footer -->
+        <footer>
+            <!-- widgets -->
+            <div class="widgets">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="flexwrap">
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>Help & Support</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="/about#faq">Help</a></li>
+                                        <li><a href="/about#faq">FAQ</a></li>
+                                        <li><a href="/about#shipping">Shipping Methods</a></li>
+                                        <li><a href="/about#contact-us">Contact us</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>User Account</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="#">Login/Signin</a></li>
+                                        <li><a href="/about#faq" onclick="openFAQQuestion('q4')">Account Management</a></li>
+                                        <li><a href="/about#privacy-security">Privacy and Security</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>Payment Info</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="/about#faq" onclick="openFAQQuestion('q6')">Payment Method</a></li>
+                                        <li><a href="/about#faq" onclick="openFAQQuestion('q6')">Credit Cards</a></li>                                  
+                                        <li><a href="/about#faq" onclick="openFAQQuestion('q5')">Refund</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>D11 Store</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="/about#about-us">About Us</a></li>
+                                        <li><a href="/about#our-leadership">Our Leaders</a></li>
+                                        <li><a href="/about#clients-and-partners">Clients and Partners</a></li>
+                                        <li><a href="/about#join-us">Join Us</a></li>
+                                        <li><a href="/about#our-values">Our Values</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim dos widgets -->
+
+            
+            <!-- footer info -->
+            <div class="footer-info">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="flexcol">
+                            <div class="logo">
+                                <a href="#"><span class="circle"></span>.D11Store</a>
+                            </div>
+                            <div class="socials">
+                                <ul class="flexitem">
+                                    <li><a href="#"><i class="ri-twitter-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-facebook-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-instagram-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-linkedin-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-youtube-line"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="mini-text">&copy; Copyright 2024 .D11Store. All right reserved.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim do footer info -->
+        </footer>
+        <!-- Fim do footer -->
+
+        <!-- menu bottom fixed -->
+        <div class="menu-bottom desktop-hide">
+            <div class="container">
+                <div class="wrapper">
+                    <nav>
+                        <ul class="flexitem">
+                            <li>
+                                <a href="/">
+                                    <i class="ri-bar-chart-line"></i>
+                                    <span>Trending</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <% if (isAuthenticated) { %>
+                                    
+                                    <a href="/dashboard">
+                                        <i class="ri-user-6-line"></i>
+                                        <span>Account</span>
+                                        <div class="fly-item" style="bottom: 5px;">
+                                            <span class="item-number">I</span>
+                                        </div>
+                                    </a>
+                                <% } else{ %>
+                                    <a href="#" id="showModalIconMobile">
+                                        <i class="ri-user-6-line"></i>
+                                        <span>Account</span>
+                                    </a>
+                                <%}%>
+                            </li>
+
+                            <li>
+                                <a href="#0" class="t-search">
+                                    <i class="ri-search-line"></i>
+                                    <span>Search</span>
+                                </a>
+                            </li>
+
+                            <% if (isAuthenticated) { %>
+                                <li>
+                                    <a href="/cart">
+                                        <i class="ri-shopping-cart-line"></i>
+                                        <span>Cart</span>
+                                        <div class="fly-item">
+                                            <span class="item-number"><%= cartItems.length %></span>
+                                        </div>
+                                    </a>
+                                </li>
+                            <%}%>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do mwnu bottom fixed -->
+
+        <!-- search bottom -->
+        <div class="search-bottom desktop-hide">
+            <div class="container">
+                <div class="wrapper">
+
+                    <form action="" class="search">
+                        <a href="#" class="t-close search-close flexcenter"><i class="ri-close-line"></i></a>
+                        <span class="icon-large"><i class="ri-search-line"></i></span>
+                        <input type="search" placeholder="Your email address" required>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do search bottom -->
+
+        <div id="modal" class="modal">
+            
+            <div class="box-login">
+                <h1 id="loginTitle">Log In</h1>
+                <form id="loginForm" action="/login" method="POST">
+                    <div class="input-group-login">
+                        <div class="input-field-login">
+                            <i class="ri-user-fill"></i>
+                            <input class="input-login" type="email" id="loginEmail" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-lock-fill"></i>
+                            <input class="input-login" type="password" id="loginPassword" name="password" placeholder="Password" required>
+                        </div>
+                        <p>Don't have an account? <a href="#" class="show-create-account">Click Here!</a></p>
+                    </div>
+                    <div class="btn-field-login">
+                        <button type="submit" id="loginbtn">Log In</button>
+                    </div>
+                </form>
+                <a href="#" class="t-close modalclose flexcenter">
+                    <i class="ri-close-line"></i>
+                </a>
+            </div>
+
+            <div class="box-createAccount" style="display: none;">
+                <h1 id="createAccountTitle">Create Account</h1>
+                <form id="createAccountForm" action="/create-account" method="POST" enctype="multipart/form-data">
+                    <div class="input-group2">
+                        <div class="input-field-login">
+                            <i class="ri-shield-user-fill"></i>
+                            <input class="input-login" type="text" id="company_name" name="company_name" placeholder="Company Name" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-user-search-fill"></i>
+                            <input class="input-login" type="text" id="nif" name="nif" placeholder="NIF" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-mail-fill"></i>
+                            <input class="input-login" type="email" id="createEmail" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-lock-fill"></i>
+                            <input class="input-login" type="password" id="createPassword" name="password" placeholder="Password" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-phone-fill"></i>
+                            <input class="input-login" type="tel" id="contact" name="contact" placeholder="Contact" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-home-4-fill"></i>
+                            <input class="input-login" type="text" id="adress" name="address" placeholder="Adress" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-image-fill"></i>
+                            <input class="input-login" type="file" name="main_img" name="main_img" id="main_img" placeholder="Image" required>
+                        </div>
+                        <div class="input-field-login full-width">
+                            <i class="ri-file-text-fill"></i>
+                            <textarea id="company_description" name="company_description" placeholder="Description" required></textarea>
+                        </div>
+                    </div>
+                    <p style="margin-top: 50px;">Already have an account? <a href="#" class="show-login">Click Here!</a></p>
+                    <div class="btn-field-login">
+                        <button type="submit" id="createbtn">Create Account</button>
+                    </div>
+                </form>
+                <a href="#" class="t-close modalclose flexcenter">
+                    <i class="ri-close-line"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="overlay"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fslightbox/3.3.1/index.js"></script>
+    <script src="/script.js"></script>
+    <script src="/script-2.js"></script>
+    <script>
+
+        // Remover artigos do icon de carrinho
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.item-remove').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    event.preventDefault();
+
+                    const productId = button.getAttribute('data-product-id');
+
+                    try {
+                        const response = await fetch('/remove-from-cart', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ productId })
+                        });
+
+                        const result = await response.json();
+                        if (result.success) {
+                            // Remover o item do DOM
+                            window.location.reload();
+                            
+                            // Mostrar mensagem de confirmação
+                            alert('Product removed from cart.');
+                        } else {
+                            alert('Erro ao remover o produto do carrinho.');
+                        }
+                    } catch (error) {
+                        console.error('Erro:', error);
+                        alert('Erro ao remover o produto do carrinho.');
+                    }
+                });
+            });
+        });
+        
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('sendMessagePageCompany');
+            const companyInput = document.getElementById('remetente');
+            const titleInput = document.getElementById('summary');
+            const msgContentInput = document.getElementById('message');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const company_name = companyInput.value;
+                const title = titleInput.value;
+                const msg_content = msgContentInput.value;
+
+                // Envia os dados do formulário para a rota sendMessage
+                fetch('/send-Message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ company_name, title, msg_content })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        window.location.reload();
+                    } else {
+                        alert(data.message);
+                        
+                    }
+                })
+                .catch(error => console.error('Error sending message:', error));
+            });
+        });
+
+        // Model de login e create account
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginBox = document.querySelector('.box-login');
+            const createAccountBox = document.querySelector('.box-createAccount');
+            const showCreateAccount = document.querySelector('.show-create-account');
+            const showLogin = document.querySelector('.show-login');
+            const modal = document.getElementById('modal');
+            const closeIcons = document.querySelectorAll('.modalclose');
+            const showModalIcon = document.getElementById('showModalIcon');
+            const showModalIconMobile = document.getElementById('showModalIconMobile');
+
+            console.log(loginBox, createAccountBox, showCreateAccount, showLogin);
+
+            // Inicialmente, exibe apenas o loginBox e oculta o createAccountBox
+            createAccountBox.style.display = 'none';
+
+            // Função para resetar os formulários ao estado inicial
+            function resetForms() {
+                loginBox.style.display = 'block';
+                createAccountBox.style.display = 'none';
+            };
+
+            // Mostrar o modal ao clicar no ícone
+            showModalIcon.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                fetch('/check-session')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.isAuthenticated) {
+                        alert('Você já tem sessão iniciada.');
+                    } else {
+                        resetForms();
+                        modal.style.display = 'block';
+                    }
+                })
+            });
+
+            showModalIconMobile.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                fetch('/check-session')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.isAuthenticated) {
+                        alert('Você já tem sessão iniciada.');
+                    } else {
+                        resetForms();
+                        modal.style.display = 'block';
+                    }
+                })
+            });
+
+            // Mostrar formulário de criação de conta ao clicar no link
+            showCreateAccount.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginBox.style.display = 'none';
+                createAccountBox.style.display = 'block';
+            });
+
+            // Mostrar formulário de login ao clicar no link
+            showLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginBox.style.display = 'block';
+                createAccountBox.style.display = 'none';
+            });
+
+            // Fechar o modal ao clicar no ícone de fechar
+            closeIcons.forEach(function(icon) {
+                icon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    modal.style.display = 'none';
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const createAccountForm = document.getElementById('createAccountForm');
+
+            createAccountForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevenir o comportamento padrão do formulário
+
+                const formData = new FormData(createAccountForm);
+
+                fetch('/create-account', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message); // Mostrar a mensagem de sucesso
+                        window.location.reload(); // Recarregar a página
+                    } else {
+                        alert(data.message); // Mostrar a mensagem de erro, se houver
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao criar a conta. Por favor, tente novamente.');
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevenir o comportamento padrão do formulário
+
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                // Verifique se os valores estão sendo capturados corretamente
+                console.log(`Email: ${email}, Password: ${password}`);
+
+                fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email, password: password })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload(); // Recarregar a página após o login bem-sucedido
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao tentar fazer login. Por favor, tente novamente.');
+                });
+            });
+        });
+
+        
+        document.getElementById('logout-icon').addEventListener('click', () => {
+            if (confirm('Are you sure you want to log out?')) {
+                fetch('/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Logout successful!');
+                        window.location.href = '/';
+                    } else {
+                        alert('Error logging out. Please try again later.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao fazer logout:', error);
+                    alert('Error logging out. Please try again later.');
+                });
+            }
+        });
+
+        const messageButton = document.getElementById('message-button');
+        messageButton.addEventListener('click', function() {
+            const messageForm = document.getElementById('message-form');
+            if (messageForm.style.display === 'none' || messageForm.style.display === '') {
+                messageForm.style.display = 'block';
+            } else {
+                messageForm.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce Website</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+</head>
+<body>
+    <div id="page" class="site page-category">
+
+        <aside class="site-off desktop-hide">
+            <div class="off-canvas">
+                <div class="canvas-head flexitem">
+                    <div class="logo"><a href="/"><span class="circle"></span>.D11Store</a></div>
+                    <a href="#" class="t-close flexcenter"><i class="ri-close-line"></i></a>
+                </div>
+                <div class="departments"></div>
+                <nav></nav>
+                <div class="thetop-nav"></div>
+            </div>
+        </aside>
+
+        <header>
+            <!--Responsive div, não mexer-->
+            <div class="header-top mobile-hide">
+                <div class="container">
+                    <div class="wrapper flexitem">   
+                    </div>
+                </div>
+            </div>
+            
+            <!-- header-top -->
+            <div class="header-nav">
+                <div class="container">
+                    <div class="wrapper flexitem">
+                        <a href="#" class="trigger desktop-hide"><span class="i ri-menu-2-line"></span></a>
+                        <div class="left flexitem">
+                            <div class="logo"><a href="/"><span class="circle"></span>.D11Store</a></div>
+                            <nav class="mobile-hide">
+                                <ul class="flexitem second-links">
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="/about">About</a></li>
+
+                                   
+                                    <li class="has-child">
+                                        <a href="#">Categories
+                                            <div class="icon-small"><i class="ri-arrow-down-s-line"></i></div>
+                                        </a>
+                                        <div class="mega">
+                                            <div class="container">
+                                                <div class="wrapper">
+                                                    <div class="flexcol">
+                                                        <div class="row">
+                                                            <h4>Departments</h4>
+                                                            <ul>
+                                                                <% results1.forEach(result => { %>
+                                                                    <li><a href="/page-category/<%= result.id %>"><%= result.name_depart%></a></li>
+                                                                <% }); %>
+                                                                
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flexcol">
+                                                        <div class="row">
+                                                            <h4>Sub-Departments</h4>
+                                                            <ul>
+                                                                <% results17.forEach(result => { %>
+                                                                    <li><a href="/page-sub_category/<%= result.id %>"><%= result.name_sub_depart%></a></li>
+                                                                <% }); %>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flexcol">
+                                                        <div class="row">
+                                                            <h4>Top Brands</h4>
+                                                            <ul class="row">
+                                                                <% results2.forEach(result => { %>
+                                                                    <li><a href="/page-company/<%= result.id %>"><%= result.company_name%></a></li>
+                                                                <% }); %>
+                                                                
+                                                            </ul>
+                                                            <a href="#" class="view-all">View all companies<i class="ri-arrow-right-line"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flexcol products">
+                                                        <div class="row">
+                                                            <div class="media">
+                                                                <div class="thumbnail object-cover">
+                                                                    <a href="#">
+                                                                        <img src="/assets/menu/menu_homeinterior.jpg" alt="">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-content">
+                                                                <h4>B2B Solutions!</h4>
+                                                                <a href="/" class="primary-button">Check Now</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <div class="right">
+                            <ul class="flexitem second-links">
+                                <li class="mobile-hide"><a href="#" id="showModalIcon">
+                                    <div class="icon-large">
+                                        <% if (isAuthenticated) { %>
+                                            <a href="/dashboard"><i class="ri-user-line"></i></a>
+                                            <div class="fly-item"><span class="item-number">I</span></div>
+                                        <% } else{ %>
+                                            <i class="ri-user-line"></i>
+                                        <%}%>
+                                    </div>
+                                </a></li>
+
+                                <% if (isAuthenticated) { %>
+                                <li class="iscart">
+                                    <a href="#">
+                                        <div class="icon-large">
+                                            <i class="ri-shopping-cart-line"></i>
+                                            <div class="fly-item"><span class="item-number"><%= cartItems.length %></span></div>
+                                        </div>
+                                        
+                                        <div class="icon-text">
+                                            <div class="mini-text">Total</div>
+                                            <div class="cart-total"><%= cartItems.reduce((acc, item) => acc + ((item.price * item.min_order)*item.quantity), 0).toFixed(2) %> €</div>
+                                        </div>
+                                    </a>
+
+                                    <div class="mini-cart">
+                                        <div class="content">
+                                            <div class="cart-head">
+                                                <%= cartItems.length %> items in cart
+                                            </div>
+                                            <div class="cart-body">
+                                                <ul class="products mini">
+                                                    <% cartItems.forEach(item => { %>
+                                                    <li class="item">
+                                                        <div class="thumbnail object-cover">
+                                                            <a href="#"><img src="/assets/empresas_img/<%= item.main_img %>" alt=""></a>
+                                                        </div>
+                                                        <div class="item-content">
+                                                            <p><a href="#"><%= item.product_name %></a></p>
+                                                            <span class="price">
+                                                                <span><%= item.price.toFixed(2) %> €</span>
+                                                                <span class="fly-item"><span><%= (item.quantity * item.min_order) %> x</span>
+                                                            </span>
+                                                        </div>
+                                                        <a href="" class="item-remove" data-product-id="<%= item.product_id %>"><i class="ri-close-line"></i></a>
+                                                    </li>
+                                                    <% }) %>
+                                                </ul>
+                                            </div>
+                                            <div class="cart-footer">
+                                                <div class="subtotal">
+                                                    <p>Subtotal</p>
+                                                    <p><strong><%= cartItems.reduce((acc, item) => acc + ((item.price * item.min_order)*item.quantity), 0).toFixed(2) %> €</strong></p>
+                                                </div>
+                                                <% if (cartItems.length > 0) { %>
+                                                    <div class="actions">
+                                                        <a href="/cart" class="primary-button">View Cart</a>
+                                                    </div>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <div class="icon-large" style="margin-left: 15px; cursor: pointer;" id="logout-icon">
+                                    <i class="ri-logout-box-r-line"></i>
+                                </div>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM do header-top -->
+
+            <!-- header-main -->
+            <!-- parte principal do site -->
+            <div class="header-main mobile-hide">
+                <div class="container">
+                    <div class="wrapper flexitem">
+                        <div class="left">
+                            <div class="dpt-cat">
+                                <div class="dpt-head">
+                                    <div class="main-text">All Departments</div>
+                                    <div class="mini-text mobile-hide">Total <%= totalProducts %> Products</div>
+                                    <a href="#" class="dpt-trigger mobile-hide">
+                                        <i class="ri-menu-3-line ri-xl"></i>
+                                        <i class="ri-close-line ri-xl"></i>
+                                    </a>
+                                </div>
+
+                                <div class="dpt-menu">
+                                    <ul class="second-links">
+                                        <% departments.forEach(department => { %>
+                                            <li class="has-child <%= department.name.toLowerCase().replace(/[\s&]/g, '') %>">
+                                                <a href="/page-category/<%= department.id %>">
+                                                    <div class="icon-large"><i class="<%= department.icon %>"></i></div>
+                                                    <%= department.name %>
+                                                    <div class="icon-small"><i class="ri-arrow-right-s-line"></i></div>
+                                                </a>
+                                                <ul>
+                                                    <% department.subDepartments.forEach(subDepartment => { %>
+                                                        <li><a href="/page-sub_category/<%= subDepartment.id %>"><%= subDepartment.name %></a></li>
+                                                    <% }); %>
+                                                </ul>
+                                            </li>
+                                        <% }); %>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="search-box">
+                                <form id="searchForm" class="search" action="/search" method="GET">
+                                    <span class="icon-large"><i class="ri-search-line"></i></span>
+                                    <input id="searchInput" type="search" name="term" placeholder="Search for products">
+                                    <div id="searchResults" class="search-results"></div>
+                                    <button type="submit">Search</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- FIM do header -->
+
+        <main>
+
+            <div class="single-category">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="column">
+                            <div class="holder">
+                                <div class="row sidebar">
+                                    <div class="filter" data-subdepartment-id="<%= results0 %>">
+                                        <!-- <div class="filter-block">
+                                            <h4>Services</h4>
+                                            <ul>
+                                                <li>
+                                                    <input type="checkbox" name="checkbox" id="athletic">
+                                                    <label for="athletic">
+                                                        <span class="checked"></span>
+                                                        <span>Athletic</span>
+                                                    </label>
+                                                    <span class="count">11</span>
+                                                </li>
+                                            </ul>
+                                        </div> -->
+
+                                        <div class="filter-block">
+                                            <h4>Brands</h4>
+                                            <ul>
+                                                <% results8.forEach(function(result) { %>
+                                                    <li>
+                                                        <input type="checkbox" name="brand" id="<%= result.company_name %>" value="<%= result.company_name %>">
+                                                        <label for="<%= result.company_name %>">
+                                                            <span class="checked"></span>
+                                                            <span><%= result.company_name %></span>
+                                                        </label>
+                                                        <span class="count"><%= result.total_produtos %></span>
+                                                    </li>
+                                                <% }); %>
+                                            </ul>
+                                        </div>
+
+                                        <div class="filter-block">
+                                            <h4>Price</h4>
+                                            <ul>
+                                                <% results9.forEach(function(result) { %>
+                                                    <li>
+                                                        <input type="checkbox" name="price" id="price_0_50" value="0-50">
+                                                        <label for="price_0_50">
+                                                            <span class="checked"></span>
+                                                            <span>0€ - 50€</span>
+                                                        </label>
+                                                        <span class="count"><%= result.total_produtos %></span>
+                                                    </li>
+                                                <% }); %>
+
+                                                <% results10.forEach(function(result) { %>
+                                                    <li>
+                                                        <input type="checkbox" name="price" id="price_50_100" value="50-100">
+                                                        <label for="price_50_100">
+                                                            <span class="checked"></span>
+                                                            <span>50€ - 100€</span>
+                                                        </label>
+                                                        <span class="count"><%= result.total_produtos %></span>
+                                                    </li>
+                                                <% }); %>
+
+                                                <% results11.forEach(function(result) { %>
+                                                    <li>
+                                                        <input type="checkbox" name="price" id="price_100_150" value="100-150">
+                                                        <label for="price_100_150">
+                                                            <span class="checked"></span>
+                                                            <span>100€ - 150€</span>
+                                                        </label>
+                                                        <span class="count"><%= result.total_produtos %></span>
+                                                    </li>
+                                                <% }); %>
+
+                                                <% results12.forEach(function(result) { %>
+                                                    <li>
+                                                        <input type="checkbox" name="price" id="price_150_max" value="150-max">
+                                                        <label for="price_150_max">
+                                                            <span class="checked"></span>
+                                                            <span>150€ - Max</span>
+                                                        </label>
+                                                        <span class="count"><%= result.total_produtos %></span>
+                                                    </li>
+                                                <% }); %>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section">
+                                    <div class="row">
+                                        <div class="cat-head">
+                                            <div class="breadcrumb">
+                                                <ul class="flexitem">
+                                                    <li><a href="#">Home</a></li>
+                                                    <li><%= departmentDetails.name_depart %></li>
+                                                    <li><%= departmentDetails.name_sub_depart %></li>
+                                                </ul>
+                                            </div>
+                                            <div class="page-title">
+                                                <h1><%= departmentDetails.name_sub_depart %></h1>
+                                            </div>
+                                            <div class="cat-description">
+                                                <p><%= departmentDetails.sub_depart_description %></p>
+                                            </div>
+                                            <div class="cat-navigation flexitem">
+                                                <div class="item-filter desktop-hide">
+                                                    <a href="#" class="filter-trigger label">
+                                                        <i class="ri-menu-2-line ri-2x"></i>
+                                                        <span>Filter</span>
+                                                    </a>
+                                                </div>
+                                                <div class="item-sortir">
+                                                    <div class="label">
+                                                        <span class="mobile-hide">Sort by default</span>
+                                                        <div class="desktop-hide">Default</div>
+                                                        <i class="ri-arrow-down-s-line"></i>
+                                                    </div>
+                                                    <ul>
+                                                        <li id="order-default">Default</li>
+                                                        <li id="order-high-low">Price High to Low</li>
+                                                        <li id="order-low-high">Price Low to High</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="products main flexwrap">
+                                        <!--products category structure-->
+
+                                        <% products.forEach(product => { %>
+                                            <div class="item">
+                                                <a href="/page-single/<%= product.id %>">
+                                                    <div class="media">
+                                                        <div class="thumbnail object-cover">
+                                                            <a href="/page-single/<%= product.id %>">
+                                                                <img src="/assets/empresas_img/<%= product.main_img %>" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <div class="hoverable">
+                                                            <ul>
+                                                                <% if (isAuthenticated) { %>
+                                                                    <li><a href="" class="like-icon" data-product-id="<%= product.id %>"><i class="ri-heart-line"></i></a></li>
+                                                                <% } %>
+                                                            </ul>
+                                                        </div>
+                                                        <% if (product.is_promotion) { %>
+                                                            <div class="discount circle flexcenter"><span><%= product.discount_percentage %>%</span></div>
+                                                        <% } %>
+                                                    </div>
+                                                    <div class="content">
+                                                        <div class="rating">
+                                                            <div class="stars">
+                                                                <i class="ri-star-fill" style="color:orange"></i>
+                                                                <i class="ri-star-fill" style="color:orange"></i>
+                                                                <i class="ri-star-fill" style="color:orange"></i>
+                                                                <i class="ri-star-fill" style="color:orange"></i>
+                                                                <i class="ri-star-fill" style="color:orange"></i>
+                                                            </div>
+                                                            <span class="mini-text">(1,955)</span>
+                                                        </div>
+                
+                                                        <h3><a href="/page-single/<%= product.id %>"><%= product.product_name %></a></h3>
+                                                        <div class="price">
+                                                            <span class="current"><%= product.is_promotion ? product.formatted_promotion_price : product.formatted_price %><%= product.price_symbol %></span>
+                                                            <% if (product.is_promotion) { %>
+                                                                <span class="normal mini-text"><%= product.formatted_price %><%= product.price_symbol %></span>
+                                                            <% } %>
+                                                        </div>
+
+                                                        <div class="mini-text">
+                                                            <p class="main-links"><a href="/page-company/<%= product.company_id %>">By: <%= product.company_name %></a></p>
+                                                        </div>
+            
+                                                        <div class="footer">
+                                                            <ul class="mini-text">
+                                                                <li>Min. Order: <%= product.min_order %> un</li>
+                                                                <% if (product.stock > product.min_order) { %>
+                                                                    <li>Ready to Ship</li>
+                                                                <% } else { %>
+                                                                    <li>Out of Stock</li>
+                                                                <% } %>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        <% }); %>
+                                    </div>
+                                    <% if (totalProducts2 > 12) { %>
+                                        <div class="load-more flexcenter">
+                                            <a id="load-more-subDepart" data-id="<%= subDepartmentId %>" class="secondary-button">Load more</a>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banners -->
+            <div class="banners">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="column">
+                            <div class="banner flexwrap">
+                                <div class="row">
+                                    <div class="item">
+                                        <div class="image">
+                                            <img src="/assets/banner/banner1.jpg" alt="">
+                                        </div>
+                                        <div class="text-content flexcol">
+                                            <h4>Service!</h4>
+                                            <h3><span>Design your business</span><br>Interior design</h3>
+                                            <a href="#" class="primary-button">Discover Now</a>
+                                        </div>
+                                        <a href="#" class="over-link"></a>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="item">
+                                        <div class="image">
+                                            <img src="/assets/banner/banner3.1.jpg" alt="">
+                                        </div>
+                                        <div class="text-content flexcol">
+                                            <h4>Service!</h4>
+                                            <h3><span>Ship your products anywhere</span><br>Transportation Services</h3>
+                                            <a href="#" class="primary-button">Discover Now</a>
+                                        </div>
+                                        <a href="#" class="over-link"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--banners-->
+
+                            <div class="product-categories flexwrap">
+                                <div class="row">
+                                    <div class="item">
+                                        <div class="image">
+                                            <img src="/assets/banner/procat1.jpg" alt="">
+                                        </div>
+                                        <div class="content mini-links">
+                                            <h4>Health & Beauty</h4>
+                                            <ul class="flexcol">
+                                                <% results4.forEach(result => { %>
+                                                    <li><a href="/page-single/<%= result.id %>"><%= result.product_name %></a></li>
+                                                <% }); %>
+                                            </ul>
+                                            <div class="second-links">
+                                                <a href="/page-category/5" class="view-all">View all<i class="ri-arrow-right-line"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="item">
+                                        <div class="image">
+                                            <img src="/assets/banner/procat2.jpg" alt="">
+                                        </div>
+                                        <div class="content mini-links">
+                                            <h4>Eletronics & Technology</h4>
+                                            <ul class="flexcol">
+                                                <% results5.forEach(result => { %>
+                                                    <li><a href="/page-single/<%= result.id %>"><%= result.product_name %></a></li>
+                                                <% }); %>
+                                            </ul>
+                                            <div class="second-links">
+                                                <a href="/page-category/3" class="view-all">View all<i class="ri-arrow-right-line"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="item">
+                                        <div class="image">
+                                            <img src="/assets/banner/procat3.jpg" alt="">
+                                        </div>
+                                        <div class="content mini-links">
+                                            <h4>Agriculture</h4>
+                                            <ul class="flexcol">
+                                                <% results6.forEach(result => { %>
+                                                    <li><a href="/page-single/<%= result.id %>"><%= result.product_name %></a></li>
+                                                <% }); %>
+                                            </ul>
+                                            <div class="second-links">
+                                                <a href="/page-category/6" id="load-more" class="view-all">View all<i class="ri-arrow-right-line"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM dos banners -->
+        </main>
+        <!-- Fim do main -->
+
+        <!-- Footer -->
+        <footer>
+            <!-- widgets -->
+            <div class="widgets">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="flexwrap">
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>Help & Support</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="/about#faq">Help</a></li>
+                                        <li><a href="/about#faq">FAQ</a></li>
+                                        <li><a href="/about#shipping">Shipping Methods</a></li>
+                                        <li><a href="/about#contact-us">Contact us</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>User Account</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="#">Login/Signin</a></li>
+                                        <li><a href="/about#faq" onclick="openFAQQuestion('q4')">Account Management</a></li>
+                                        <li><a href="/about#privacy-security">Privacy and Security</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>Payment Info</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="/about#faq" onclick="openFAQQuestion('q6')">Payment Method</a></li>
+                                        <li><a href="/about#faq" onclick="openFAQQuestion('q6')">Credit Cards</a></li>                                  
+                                        <li><a href="/about#faq" onclick="openFAQQuestion('q5')">Refund</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="item mini-links">
+                                    <h4>D11 Store</h4>
+                                    <ul class="flexcol">
+                                        <li><a href="/about#about-us">About Us</a></li>
+                                        <li><a href="/about#our-leadership">Our Leaders</a></li>
+                                        <li><a href="/about#clients-and-partners">Clients and Partners</a></li>
+                                        <li><a href="/about#join-us">Join Us</a></li>
+                                        <li><a href="/about#our-values">Our Values</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim dos widgets -->
+
+            
+            <!-- footer info -->
+            <div class="footer-info">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="flexcol">
+                            <div class="logo">
+                                <a href="#"><span class="circle"></span>.D11Store</a>
+                            </div>
+                            <div class="socials">
+                                <ul class="flexitem">
+                                    <li><a href="#"><i class="ri-twitter-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-facebook-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-instagram-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-linkedin-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-youtube-line"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="mini-text">&copy; Copyright 2024 .D11Store. All right reserved.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim do footer info -->
+        </footer>
+        <!-- Fim do footer -->
+
+        <!-- menu bottom fixed -->
+        <div class="menu-bottom desktop-hide">
+            <div class="container">
+                <div class="wrapper">
+                    <nav>
+                        <ul class="flexitem">
+                            <li>
+                                <a href="/">
+                                    <i class="ri-bar-chart-line"></i>
+                                    <span>Trending</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <% if (isAuthenticated) { %>
+                                    
+                                    <a href="/dashboard">
+                                        <i class="ri-user-6-line"></i>
+                                        <span>Account</span>
+                                        <div class="fly-item" style="bottom: 5px;">
+                                            <span class="item-number">I</span>
+                                        </div>
+                                    </a>
+                                <% } else{ %>
+                                    <a href="#" id="showModalIconMobile">
+                                        <i class="ri-user-6-line"></i>
+                                        <span>Account</span>
+                                    </a>
+                                <%}%>
+                            </li>
+
+                            <li>
+                                <a href="#0" class="t-search">
+                                    <i class="ri-search-line"></i>
+                                    <span>Search</span>
+                                </a>
+                            </li>
+
+                            <% if (isAuthenticated) { %>
+                                <li>
+                                    <a href="/cart">
+                                        <i class="ri-shopping-cart-line"></i>
+                                        <span>Cart</span>
+                                        <div class="fly-item">
+                                            <span class="item-number"><%= cartItems.length %></span>
+                                        </div>
+                                    </a>
+                                </li>
+                            <%}%>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do mwnu bottom fixed -->
+
+        <!-- search bottom -->
+        <div class="search-bottom desktop-hide">
+            <div class="container">
+                <div class="wrapper">
+
+                    <form action="" class="search">
+                        <a href="#" class="t-close search-close flexcenter"><i class="ri-close-line"></i></a>
+                        <span class="icon-large"><i class="ri-search-line"></i></span>
+                        <input type="search" placeholder="Your email address" required>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do search bottom -->
+
+        <div id="modal" class="modal">
+            
+            <div class="box-login">
+                <h1 id="loginTitle">Log In</h1>
+                <form id="loginForm" action="/login" method="POST">
+                    <div class="input-group-login">
+                        <div class="input-field-login">
+                            <i class="ri-user-fill"></i>
+                            <input class="input-login" type="email" id="loginEmail" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-lock-fill"></i>
+                            <input class="input-login" type="password" id="loginPassword" name="password" placeholder="Password" required>
+                        </div>
+                        <p>Don't have an account? <a href="#" class="show-create-account">Click Here!</a></p>
+                    </div>
+                    <div class="btn-field-login">
+                        <button type="submit" id="loginbtn">Log In</button>
+                    </div>
+                </form>
+                <a href="#" class="t-close modalclose flexcenter">
+                    <i class="ri-close-line"></i>
+                </a>
+            </div>
+
+            <div class="box-createAccount" style="display: none;">
+                <h1 id="createAccountTitle">Create Account</h1>
+                <form id="createAccountForm" action="/create-account" method="POST" enctype="multipart/form-data">
+                    <div class="input-group2">
+                        <div class="input-field-login">
+                            <i class="ri-shield-user-fill"></i>
+                            <input class="input-login" type="text" id="company_name" name="company_name" placeholder="Company Name" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-user-search-fill"></i>
+                            <input class="input-login" type="text" id="nif" name="nif" placeholder="NIF" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-mail-fill"></i>
+                            <input class="input-login" type="email" id="createEmail" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-lock-fill"></i>
+                            <input class="input-login" type="password" id="createPassword" name="password" placeholder="Password" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-phone-fill"></i>
+                            <input class="input-login" type="tel" id="contact" name="contact" placeholder="Contact" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-home-4-fill"></i>
+                            <input class="input-login" type="text" id="adress" name="address" placeholder="Adress" required>
+                        </div>
+                        <div class="input-field-login">
+                            <i class="ri-image-fill"></i>
+                            <input class="input-login" type="file" name="main_img" name="main_img" id="main_img" placeholder="Image" required>
+                        </div>
+                        <div class="input-field-login full-width">
+                            <i class="ri-file-text-fill"></i>
+                            <textarea id="company_description" name="company_description" placeholder="Description" required></textarea>
+                        </div>
+                    </div>
+                    <p style="margin-top: 50px;">Already have an account? <a href="#" class="show-login">Click Here!</a></p>
+                    <div class="btn-field-login">
+                        <button type="submit" id="createbtn">Create Account</button>
+                    </div>
+                </form>
+                <a href="#" class="t-close modalclose flexcenter">
+                    <i class="ri-close-line"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="overlay"></div>
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fslightbox/3.3.1/index.js"></script>
+    <script src="/script.js"></script>
+    <script src="/script-2.js"></script>
+    <script>
+        // Remover artigos do icon de carrinho
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.item-remove').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    event.preventDefault();
+
+                    const productId = button.getAttribute('data-product-id');
+
+                    try {
+                        const response = await fetch('/remove-from-cart', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ productId })
+                        });
+
+                        const result = await response.json();
+                        if (result.success) {
+                            // Remover o item do DOM
+                            window.location.reload();
+                            
+                            // Mostrar mensagem de confirmação
+                            alert('Product removed from cart.');
+                        } else {
+                            alert('Erro ao remover o produto do carrinho.');
+                        }
+                    } catch (error) {
+                        console.error('Erro:', error);
+                        alert('Erro ao remover o produto do carrinho.');
+                    }
+                });
+            });
+        });
+        // Model de login e create account
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginBox = document.querySelector('.box-login');
+            const createAccountBox = document.querySelector('.box-createAccount');
+            const showCreateAccount = document.querySelector('.show-create-account');
+            const showLogin = document.querySelector('.show-login');
+            const modal = document.getElementById('modal');
+            const closeIcons = document.querySelectorAll('.modalclose');
+            const showModalIcon = document.getElementById('showModalIcon');
+            const showModalIconMobile = document.getElementById('showModalIconMobile');
+
+            console.log(loginBox, createAccountBox, showCreateAccount, showLogin);
+
+            // Inicialmente, exibe apenas o loginBox e oculta o createAccountBox
+            createAccountBox.style.display = 'none';
+
+            // Função para resetar os formulários ao estado inicial
+            function resetForms() {
+                loginBox.style.display = 'block';
+                createAccountBox.style.display = 'none';
+            };
+
+            // Mostrar o modal ao clicar no ícone
+            showModalIcon.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                fetch('/check-session')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.isAuthenticated) {
+                        alert('Você já tem sessão iniciada.');
+                    } else {
+                        resetForms();
+                        modal.style.display = 'block';
+                    }
+                })
+            });
+
+            showModalIconMobile.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                fetch('/check-session')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.isAuthenticated) {
+                        alert('Você já tem sessão iniciada.');
+                    } else {
+                        resetForms();
+                        modal.style.display = 'block';
+                    }
+                })
+            });
+
+            // Mostrar formulário de criação de conta ao clicar no link
+            showCreateAccount.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginBox.style.display = 'none';
+                createAccountBox.style.display = 'block';
+            });
+
+            // Mostrar formulário de login ao clicar no link
+            showLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginBox.style.display = 'block';
+                createAccountBox.style.display = 'none';
+            });
+
+            // Fechar o modal ao clicar no ícone de fechar
+            closeIcons.forEach(function(icon) {
+                icon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    modal.style.display = 'none';
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const createAccountForm = document.getElementById('createAccountForm');
+
+            createAccountForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevenir o comportamento padrão do formulário
+
+                const formData = new FormData(createAccountForm);
+
+                fetch('/create-account', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message); // Mostrar a mensagem de sucesso
+                        window.location.reload(); // Recarregar a página
+                    } else {
+                        alert(data.message); // Mostrar a mensagem de erro, se houver
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao criar a conta. Por favor, tente novamente.');
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevenir o comportamento padrão do formulário
+
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                // Verifique se os valores estão sendo capturados corretamente
+                console.log(`Email: ${email}, Password: ${password}`);
+
+                fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email, password: password })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload(); // Recarregar a página após o login bem-sucedido
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao tentar fazer login. Por favor, tente novamente.');
+                });
+            });
+        });
+
+
+        // //Filters Page-Sub_Category
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterForm = document.querySelector('.filter');
+            const productsContainer = document.querySelector('.products.main.flexwrap');
+            const subDepartmentId = filterForm.getAttribute('data-subdepartment-id');
+
+            const orderByDefault = document.querySelector('#order-default');
+            const orderByHighLow = document.querySelector('#order-high-low');
+            const orderByLowHigh = document.querySelector('#order-low-high');
+
+            let currentOrder = 'default';
+
+            orderByDefault.addEventListener('click', () => {
+                currentOrder = 'default';
+                applyFiltersAndSort();
+                updateSortLabel('Default');
+            });
+
+            orderByHighLow.addEventListener('click', () => {
+                currentOrder = 'high-low';
+                applyFiltersAndSort();
+                updateSortLabel('Price High to Low');
+            });
+
+            orderByLowHigh.addEventListener('click', () => {
+                currentOrder = 'low-high';
+                applyFiltersAndSort();
+                updateSortLabel('Price Low to High');
+            });
+
+            filterForm.addEventListener('change', () => {
+                applyFiltersAndSort();
+            });
+
+            function updateSortLabel(label) {
+                const sortLabel = document.querySelector('.item-sortir .label .mobile-hide');
+                sortLabel.textContent = label;
+            }
+
+            async function applyFiltersAndSort() {
+                const brands = Array.from(document.querySelectorAll('input[name="brand"]:checked')).map(cb => cb.value);
+                const prices = Array.from(document.querySelectorAll('input[name="price"]:checked')).map(cb => cb.value);
+
+                const filters = {
+                    brands,
+                    prices,
+                    order: currentOrder
+                };
+
+                try {
+                    const response = await fetch(`/filter-products-sub_category/${subDepartmentId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(filters)
+                    });
+
+                    const { products, isAuthenticated } = await response.json();
+                    displayProducts(products, isAuthenticated);
+                } catch (error) {
+                    console.error('Erro ao carregar produtos filtrados:', error);
+                }
+            };
+
+            function displayProducts(products, isAuthenticated) {
+                productsContainer.innerHTML = '';
+                products.forEach(product => {
+                    const productHTML = `
+                        <div class="media">
+                            <div class="thumbnail object-cover">
+                                <a href="/page-single/${product.id}">
+                                    <img src="/assets/empresas_img/${product.main_img}" alt="">
+                                </a>
+                            </div>
+                            <div class="hoverable">
+                                <ul>
+                                    ${isAuthenticated ? `<li><a href="" class="like-icon" data-product-id="${product.id}"><i class="ri-heart-line"></i></a></li>`:''}
+                                </ul>
+                            </div>
+                            ${product.is_promotion ? `<div class="discount circle flexcenter"><span>${product.discount_percentage}%</span></div>` : ''}
+                        </div>
+                        <div class="content">
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="ri-star-fill" style="color:orange"></i>
+                                    <i class="ri-star-fill" style="color:orange"></i>
+                                    <i class="ri-star-fill" style="color:orange"></i>
+                                    <i class="ri-star-fill" style="color:orange"></i>
+                                    <i class="ri-star-fill" style="color:orange"></i>
+                                </div>
+                                <span class="mini-text">(2,548)</span>
+                            </div>
+                            <h3><a href="/page-single/${product.id}">${product.product_name}</a></h3>
+                            <div class="price">
+                                <span class="current">${product.is_promotion ? product.formatted_promotion_price : product.formatted_price}${product.price_symbol}</span>
+                                ${product.is_promotion ? `<span class="normal mini-text">${product.formatted_price}${product.price_symbol}</span>` : ''}
+                            </div>
+                            <div class="mini-text">
+                                <p>By: ${product.company_name}</p>
+                            </div>
+                            <div class="footer">
+                                <ul class="mini-text">
+                                    <li>Min. Order: ${product.min_order} un</li>
+                                    <li>Ready to Ship</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                    const productDiv = document.createElement('div');
+                    productDiv.classList.add('item');
+                    productDiv.innerHTML = productHTML;
+                    productsContainer.appendChild(productDiv);
+                });
+            }
+        });
+
+        document.getElementById('logout-icon').addEventListener('click', () => {
+            if (confirm('Are you sure you want to log out?')) {
+                fetch('/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Logout successful!');
+                        window.location.href = '/';
+                    } else {
+                        alert('Error logging out. Please try again later.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao fazer logout:', error);
+                    alert('Error logging out. Please try again later.');
+                });
+            }
+        });
+    </script>
+    
+</body>
+</html>
