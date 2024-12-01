@@ -1,0 +1,1 @@
+This is a B2B marketplace platform built with NodeJs, Express and EJS. This marketplace allows companies to buy and sell products or services to other companies. Making business-to-business easier. The platform allows a company to register and buy products securely using stripe safe payment. It also allows companies to manage their products using the dashboard.
